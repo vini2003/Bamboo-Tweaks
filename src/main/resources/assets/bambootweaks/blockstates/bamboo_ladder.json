@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": { "model": "bambootweaks:block/bamboo_ladder" },
+        "facing=east":  { "model": "bambootweaks:block/bamboo_ladder", "y": 90 },
+        "facing=south": { "model": "bambootweaks:block/bamboo_ladder", "y": 180 },
+        "facing=west":  { "model": "bambootweaks:block/bamboo_ladder", "y": 270 }
+    }
+}

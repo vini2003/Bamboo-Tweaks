@@ -11,6 +11,9 @@ import net.minecraft.item.Item;
 
 public class ItemRegistry {
     public static void registerItems() {
+        Registry.register(Registry.ITEM, new Identifier("bambootweaks", "bamboo_fence_gate"), new BlockItem(BlockRegistry.BAMBOO_FENCE_GATE_BLOCK, new Item.Settings().group(ItemGroup.MISC)));
+        Registry.register(Registry.ITEM, new Identifier("bambootweaks", "bamboo_fence"), new BlockItem(BlockRegistry.BAMBOO_FENCE_BLOCK, new Item.Settings().group(ItemGroup.MISC)));
+        Registry.register(Registry.ITEM, new Identifier("bambootweaks", "bamboo_ladder"), new BlockItem(BlockRegistry.BAMBOO_LADDER_BLOCK, new Item.Settings().group(ItemGroup.MISC)));
         Registry.register(Registry.ITEM, new Identifier("bambootweaks", "bamboo_spike"), new BlockItem(BlockRegistry.BAMBOO_SPIKE_BLOCK, new Item.Settings().group(ItemGroup.MISC)));
         Registry.register(Registry.ITEM, new Identifier("bambootweaks", "bamboo_rod"), new BlockItem(BlockRegistry.BAMBOO_ROD, new Item.Settings().group(ItemGroup.MISC)));
         Registry.register(Registry.ITEM, new Identifier("bambootweaks", "bamboo_block"), new BlockItem(BlockRegistry.BAMBOO_BLOCK, new Item.Settings().group(ItemGroup.MISC)));

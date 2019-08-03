@@ -22,6 +22,7 @@
     ]
   },
   "mixins": [
+    "bambootweaks.mixin.json"
   ],
 
   "depends": {

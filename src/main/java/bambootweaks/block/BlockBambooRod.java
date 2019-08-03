@@ -16,7 +16,6 @@ import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.StateFactory;
 import net.minecraft.world.BlockView;
 
-
 public class BlockBambooRod extends Block {
     private static final DirectionProperty FACING = FacingBlock.FACING;
 
