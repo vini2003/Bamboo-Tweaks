@@ -1,0 +1,17 @@
+{
+    "type": "crafting_shaped",
+    "pattern": [
+        "B",
+        "BB",
+        "BBB"
+    ],
+    "key": {
+        "B": {
+            "item": "bambootweaks:block/bamboo_block"
+        }
+    },
+    "result": {
+        "item": "bambootweaks:bamboo_stairs",
+        "count": 6
+    }
+}

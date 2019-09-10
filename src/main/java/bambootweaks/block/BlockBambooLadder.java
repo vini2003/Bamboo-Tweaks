@@ -7,8 +7,8 @@ import net.minecraft.block.LadderBlock;
 import net.minecraft.util.math.Direction;
 
 public class BlockBambooLadder extends LadderBlock implements BlockClimbable {
-    protected BlockBambooLadder(Block.Settings block$Settings_1) {
-        super(block$Settings_1);
+    protected BlockBambooLadder(Block.Settings settings) {
+        super(settings);
         this.setDefaultState((BlockState)((BlockState)((BlockState)this.stateFactory.getDefaultState()).with(FACING, Direction.NORTH)).with(WATERLOGGED, false));
     }
 }

@@ -1,7 +1,6 @@
 package bambootweaks;
 
 import net.fabricmc.api.ModInitializer;
-
 import bambootweaks.block.BlockRegistry;
 import bambootweaks.item.ItemRegistry;
 

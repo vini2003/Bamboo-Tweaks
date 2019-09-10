@@ -1,20 +1,19 @@
 package bambootweaks.mixin;
 
-import bambootweaks.block.BlockBambooLadder;
-import bambootweaks.BlockClimbable;
-
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.Mixin;
 
-import net.minecraft.block.BlockState;
+import bambootweaks.BlockClimbable;
+import bambootweaks.block.BlockBambooLadder;
 import net.minecraft.block.Block;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 
 @Mixin(LivingEntity.class)
 abstract class MixinLivingEntity extends Entity {

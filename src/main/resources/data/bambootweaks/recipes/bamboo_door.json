@@ -1,0 +1,17 @@
+{
+    "type": "crafting_shaped",
+    "pattern": [
+        "BB",
+        "BB",
+        "BB"
+    ],
+    "key": {
+        "B": {
+            "item": "minecraft:bamboo"
+        }
+    },
+    "result": {
+        "item": "bambootweaks:bamboo_door",
+        "count": 1
+    }
+}

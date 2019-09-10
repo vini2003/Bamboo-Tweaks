@@ -1,10 +1,11 @@
 {
     "block.bambootweaks.bamboo_block": "Bamboo Block",
-    "block.bambootweaks.bamboo_torch": "Bamboo Torch",
-    "block.bambootweaks.bamboo_torch_wall": "Bamboo Torch",
-    "block.bambootweaks.bamboo_spike": "Bamboo Spike",
-    "block.bambootweaks.bamboo_rod": "Bamboo Rod",
-    "block.bambootweaks.bamboo_ladder": "Bamboo Ladder",
+    "block.bambootweaks.bamboo_fence_gate": "Bamboo Fence Gate",
+    "block.bambootweaks.bamboo_fence_wall": "Bamboo Fence Wall",
     "block.bambootweaks.bamboo_fence": "Bamboo Fence",
-    "block.bambootweaks.bamboo_fence_gate": "Bamboo Fence Gate"
+    "block.bambootweaks.bamboo_ladder": "Bamboo Ladder",
+    "block.bambootweaks.bamboo_rod": "Bamboo Rod",
+    "block.bambootweaks.bamboo_spike": "Bamboo Spike",
+    "block.bambootweaks.bamboo_torch_wall": "Bamboo Torch",
+    "block.bambootweaks.bamboo_torch": "Bamboo Torch"
 }
