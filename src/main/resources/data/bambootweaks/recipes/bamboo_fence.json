@@ -1,19 +1,19 @@
 {
-    "type": "crafting_shaped",
-    "pattern": [
-        "LBL",
-        "LBL"
-    ],
-    "key": {
-        "L": {
-            "item": "bambootweaks:bamboo_block"
-        },
-        "B": {
-            "item": "minecraft:bamboo"
-        }
-    },
-    "result": {
-        "item": "bambootweaks:bamboo_fence",
-        "count": 1
-    }
+	"type": "crafting_shaped",
+	"pattern": [
+		"LBL",
+		"LBL"
+	],
+	"key": {
+		"L": {
+			"item": "bambootweaks:bamboo_block"
+		},
+		"B": {
+			"item": "minecraft:bamboo"
+		}
+	},
+	"result": {
+		"item": "bambootweaks:bamboo_fence",
+		"count": 1
+	}
 }

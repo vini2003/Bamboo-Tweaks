@@ -1,17 +1,17 @@
 {
-    "type": "crafting_shaped",
-    "pattern": [
-        "B",
-        "B",
-        "B"
-    ],
-    "key": {
-        "B": {
-            "item": "minecraft:bamboo"
-        }
-    },
-    "result": {
-        "item": "bambootweaks:bamboo_rod",
-        "count": 1
-    }
+	"type": "crafting_shaped",
+	"pattern": [
+		"B",
+		"B",
+		"B"
+	],
+	"key": {
+		"B": {
+			"item": "minecraft:bamboo"
+		}
+	},
+	"result": {
+		"item": "bambootweaks:bamboo_rod",
+		"count": 1
+	}
 }

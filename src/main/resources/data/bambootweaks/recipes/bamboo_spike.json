@@ -1,20 +1,20 @@
 {
-    "type": "crafting_shaped",
-    "pattern": [
-        " B ",
-        "BLB",
-        "LLL"
-    ],
-    "key": {
-        "L": {
-            "item": "bambootweaks:bamboo_block"
-        },
-        "B": {
-            "item": "minecraft:bamboo"
-        }
-    },
-    "result": {
-        "item": "bambootweaks:bamboo_spike",
-        "count": 1
-    }
+	"type": "crafting_shaped",
+	"pattern": [
+		" B ",
+		"BLB",
+		"LLL"
+	],
+	"key": {
+		"L": {
+			"item": "bambootweaks:bamboo_block"
+		},
+		"B": {
+			"item": "minecraft:bamboo"
+		}
+	},
+	"result": {
+		"item": "bambootweaks:bamboo_spike",
+		"count": 1
+	}
 }

@@ -1,42 +1,38 @@
 package bambootweaks.mixin;
 
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
-
-import bambootweaks.BlockClimbable;
-import bambootweaks.block.BlockBambooLadder;
+import bambootweaks.block.ExposedLadderBlock;
+import bambootweaks.util.BlockClimbable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(LivingEntity.class)
-abstract class MixinLivingEntity extends Entity {
-	private MixinLivingEntity() {
-		super(null, null);
-	}
+abstract class MixinLivingEntity {
 
 	@Inject(
-		method = "isClimbing",
-		at = @At(value = "RETURN", ordinal = 2),
-		locals = LocalCapture.CAPTURE_FAILHARD,
-		allow = 1,
-		cancellable = true)
+			method = "isClimbing",
+			at = @At(value = "RETURN", ordinal = 2),
+			locals = LocalCapture.CAPTURE_FAILHARD,
+			allow = 1,
+			cancellable = true)
 	void onIsClimbing(final CallbackInfoReturnable<Boolean> cir, final BlockState state, final Block block) {
+		LivingEntity livingEntity = (LivingEntity)(Object)this;
 		if (block instanceof BlockClimbable) {
 			final LivingEntity self = (LivingEntity) (Object) this;
-			cir.setReturnValue(((BlockClimbable) block).canClimb(self, state, new BlockPos(this)));
-		} 
-		else {
-			final BlockPos down = new BlockPos(x, y - 0.5, z);
-			final Block below = world.getBlockState(down).getBlock();
-			if (below instanceof BlockBambooLadder) {
-				cir.setReturnValue(y - MathHelper.floor(y) < 0.5);
+			cir.setReturnValue(((BlockClimbable) block).canClimb(self, state, new BlockPos(livingEntity)));
+		} else {
+			final BlockPos down = new BlockPos(livingEntity.getX(), livingEntity.getY() - 0.5, livingEntity.getZ());
+			final Block below = livingEntity.world.getBlockState(down).getBlock();
+			if (below instanceof ExposedLadderBlock) {
+				cir.setReturnValue(livingEntity.getY() - MathHelper.floor(livingEntity.getY()) < 0.5);
 			}
 		}
 	}

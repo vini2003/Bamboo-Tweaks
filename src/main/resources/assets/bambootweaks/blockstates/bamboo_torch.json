@@ -1,7 +1,7 @@
 {
-    "variants": {
-        "": {
-            "model": "bambootweaks:block/bamboo_torch"
-        }
-    }
+	"variants": {
+		"": {
+			"model": "bambootweaks:block/bamboo_torch"
+		}
+	}
 }
