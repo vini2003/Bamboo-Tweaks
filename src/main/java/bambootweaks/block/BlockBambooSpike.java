@@ -5,6 +5,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.FacingBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityContext;
+import net.minecraft.entity.EntityCategory;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
@@ -64,7 +66,7 @@ public class BlockBambooSpike extends Block {
 
 	@Override
 	public void onEntityCollision(BlockState blockState, World world, BlockPos blockPosition, Entity entity) {
-		entity.damage(DamageSource.CACTUS, 2.0F);
+		if(entity.getType() == EntityType.PLAYER || entity.getType().getCategory() != EntityCategory.MISC) entity.damage(DamageSource.CACTUS, 2.0F);
 		super.onEntityCollision(blockState, world, blockPosition, entity);
 	}
 
