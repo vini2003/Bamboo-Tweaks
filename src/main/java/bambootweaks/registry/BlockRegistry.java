@@ -11,6 +11,7 @@ import bambootweaks.block.ExposedTorchBlock;
 import bambootweaks.block.ExposedWallTorchBlock;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.impl.content.registry.FuelRegistryImpl;
 import net.minecraft.block.Block;
 import net.minecraft.block.FenceBlock;
 import net.minecraft.block.FenceGateBlock;
@@ -38,6 +39,15 @@ public class BlockRegistry {
 	public static final Block BAMBOO_TORCH_BLOCK = register("bamboo_torch", RenderLayer.getCutout(), new ExposedTorchBlock(FabricBlockSettings.of(Material.PART).lightLevel(14).noCollision().sounds(BlockSoundGroup.BAMBOO).nonOpaque().build()), (BlockItem) null);
 	public static final Block BAMBOO_TORCH_BLOCK_WALL = register("bamboo_torch_wall", RenderLayer.getCutout(), new ExposedWallTorchBlock(FabricBlockSettings.of(Material.PART).lightLevel(14).noCollision().sounds(BlockSoundGroup.BAMBOO).nonOpaque().build()), (BlockItem) null);
 
+	FuelRegistryImpl.INSTANCE.add(BAMBOO_BLOCK, 500);
+	FuelRegistryImpl.INSTANCE.add(BAMBOO_DOOR, 200);
+	FuelRegistryImpl.INSTANCE.add(BAMBOO_FENCE_BLOCK, 300);
+	FuelRegistryImpl.INSTANCE.add(BAMBOO_FENCE_GATE_BLOCK, 300);
+	FuelRegistryImpl.INSTANCE.add(BAMBOO_FENCE_WALL_BLOCK, 300);
+	FuelRegistryImpl.INSTANCE.add(BAMBOO_LADDER_BLOCK, 300);
+	FuelRegistryImpl.INSTANCE.add(BAMBOO_ROD, 200);
+	FuelRegistryImpl.INSTANCE.add(BAMBOO_STAIRS_BLOCK, 300);
+	
 	public BlockRegistry() {
 		// NO-OP
 	}
