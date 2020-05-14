@@ -67,6 +67,13 @@ public class BlockBambooSpike extends Block {
 		entity.damage(DamageSource.CACTUS, 2.0F);
 		super.onEntityCollision(blockState, world, blockPosition, entity);
 	}
+	
+	@Override
+	public void onLandedUpon(World world, BlockPos pos, Entity entity, float distance){
+		entity.handleFallDamage(distance, 5.0F);
+		
+		super.onLandedUpon(world, pos, entity, distance);
+	}
 
 	@Override
 	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
