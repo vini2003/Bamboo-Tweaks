@@ -15,14 +15,13 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"bambootweaks.BambooTweaks"
+			"com.github.vini2003.bambootweaks.BambooTweaks"
 		],
 		"client": [
-			"bambootweaks.BambooTweaksClient"
+			"com.github.vini2003.bambootweaks.BambooTweaksClient"
 		]
 	},
 	"mixins": [
-		"bambootweaks.mixin.json"
 	],
 	"depends": {
 		"fabricloader": ">=0.7.0",
