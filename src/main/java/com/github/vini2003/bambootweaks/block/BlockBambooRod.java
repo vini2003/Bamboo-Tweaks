@@ -1,10 +1,6 @@
-package bambootweaks.block;
+package com.github.vini2003.bambootweaks.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.FacingBlock;
-import net.minecraft.entity.EntityContext;
+import net.minecraft.block.*;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
@@ -26,7 +22,7 @@ public class BlockBambooRod extends Block {
 	}
 
 	@Override
-	public VoxelShape getOutlineShape(BlockState blockState, BlockView blockView, BlockPos blockPosition, EntityContext entityContext) {
+	public VoxelShape getOutlineShape(BlockState blockState, BlockView blockView, BlockPos blockPosition, ShapeContext ShapeContext) {
 		switch (blockState.get(FACING).getAxis()) {
 			case Z:
 				return Z_SHAPE;
@@ -40,7 +36,7 @@ public class BlockBambooRod extends Block {
 	}
 
 	@Override
-	public VoxelShape getCollisionShape(BlockState blockState, BlockView blockView, BlockPos blockPosition, EntityContext entityContext) {
+	public VoxelShape getCollisionShape(BlockState blockState, BlockView blockView, BlockPos blockPosition, ShapeContext ShapeContext) {
 		return this.collidable ? blockState.getOutlineShape(blockView, blockPosition) : VoxelShapes.empty();
 	}
 

@@ -1,4 +1,4 @@
-package bambootweaks.block;
+package com.github.vini2003.bambootweaks.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

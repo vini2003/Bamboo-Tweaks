@@ -1,16 +1,15 @@
-package bambootweaks.block;
+package com.github.vini2003.bambootweaks.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalFacingBlock;
-import net.minecraft.entity.EntityContext;
+import net.minecraft.block.ShapeContext;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 
 public class BlockBambooWall extends Block {
@@ -24,7 +23,7 @@ public class BlockBambooWall extends Block {
 	}
 
 	@Override
-	public VoxelShape getOutlineShape(BlockState blockState, BlockView blockView, BlockPos blockPosition, EntityContext entityContext) {
+	public VoxelShape getOutlineShape(BlockState blockState, BlockView blockView, BlockPos blockPosition, ShapeContext ShapeContext) {
 		switch (blockState.get(FACING)) {
 			case NORTH:
 				return Z_SHAPE;
@@ -40,8 +39,8 @@ public class BlockBambooWall extends Block {
 	}
 
 	@Override
-	public VoxelShape getCollisionShape(BlockState blockState, BlockView blockView, BlockPos blockPosition, EntityContext entityContext) {
-		return getOutlineShape(blockState, blockView, blockPosition, entityContext);
+	public VoxelShape getCollisionShape(BlockState blockState, BlockView blockView, BlockPos blockPosition, ShapeContext ShapeContext) {
+		return getOutlineShape(blockState, blockView, blockPosition, ShapeContext);
 	}
 
 	@Override

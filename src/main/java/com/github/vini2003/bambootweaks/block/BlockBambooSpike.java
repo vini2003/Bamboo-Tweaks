@@ -1,12 +1,12 @@
-package bambootweaks.block;
+package com.github.vini2003.bambootweaks.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FacingBlock;
+import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityContext;
-import net.minecraft.entity.EntityCategory;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
@@ -33,7 +33,7 @@ public class BlockBambooSpike extends Block {
 	}
 
 	@Override
-	public VoxelShape getOutlineShape(BlockState blockState, BlockView blockView, BlockPos blockPosition, EntityContext entityContext) {
+	public VoxelShape getOutlineShape(BlockState blockState, BlockView blockView, BlockPos blockPosition, ShapeContext ShapeContext) {
 		switch (blockState.get(FACING)) {
 			case UP:
 				return UP_SHAPE;
@@ -53,7 +53,7 @@ public class BlockBambooSpike extends Block {
 	}
 
 	@Override
-	public VoxelShape getCollisionShape(BlockState blockState, BlockView blockView, BlockPos blockPosition, EntityContext entityContext) {
+	public VoxelShape getCollisionShape(BlockState blockState, BlockView blockView, BlockPos blockPosition, ShapeContext ShapeContext) {
 		return this.collidable ? blockState.getOutlineShape(blockView, blockPosition) : VoxelShapes.empty();
 	}
 
@@ -66,7 +66,7 @@ public class BlockBambooSpike extends Block {
 
 	@Override
 	public void onEntityCollision(BlockState blockState, World world, BlockPos blockPosition, Entity entity) {
-		if(entity.getType() == EntityType.PLAYER || entity.getType().getCategory() != EntityCategory.MISC) entity.damage(DamageSource.CACTUS, 2.0F);
+		if(entity.getType() == EntityType.PLAYER || entity.getType().getSpawnGroup() != SpawnGroup.MISC) entity.damage(DamageSource.CACTUS, 2.0F);
 		super.onEntityCollision(blockState, world, blockPosition, entity);
 	}
 	

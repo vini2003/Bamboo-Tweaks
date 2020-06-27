@@ -1,7 +1,7 @@
-package bambootweaks;
+package com.github.vini2003.bambootweaks;
 
-import bambootweaks.registry.BlockRegistry;
-import bambootweaks.registry.ItemRegistry;
+import com.github.vini2003.bambootweaks.registry.BambooTweaksBlocks;
+import com.github.vini2003.bambootweaks.registry.BambooTweaksItems;
 import net.fabricmc.api.ModInitializer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,7 +13,7 @@ public class BambooTweaks implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		ItemRegistry.initialize();
-		BlockRegistry.initialize();
+		BambooTweaksItems.initialize();
+		BambooTweaksBlocks.initialize();
 	}
 }

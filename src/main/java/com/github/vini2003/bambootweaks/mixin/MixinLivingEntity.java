@@ -1,10 +1,9 @@
-package bambootweaks.mixin;
+package com.github.vini2003.bambootweaks.mixin;
 
-import bambootweaks.block.ExposedLadderBlock;
-import bambootweaks.util.BlockClimbable;
+import com.github.vini2003.bambootweaks.block.ExposedLadderBlock;
+import com.github.vini2003.bambootweaks.utilities.BlockClimbable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -27,7 +26,7 @@ abstract class MixinLivingEntity {
 		LivingEntity livingEntity = (LivingEntity)(Object)this;
 		if (block instanceof BlockClimbable) {
 			final LivingEntity self = (LivingEntity) (Object) this;
-			cir.setReturnValue(((BlockClimbable) block).canClimb(self, state, new BlockPos(livingEntity)));
+			cir.setReturnValue(((BlockClimbable) block).canClimb(self, state, livingEntity.getBlockPos()));
 		} else {
 			final BlockPos down = new BlockPos(livingEntity.getX(), livingEntity.getY() - 0.5, livingEntity.getZ());
 			final Block below = livingEntity.world.getBlockState(down).getBlock();

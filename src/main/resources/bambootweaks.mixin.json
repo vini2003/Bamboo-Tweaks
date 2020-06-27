@@ -1,6 +1,6 @@
 {
 	"required": true,
-	"package": "bambootweaks.mixin",
+	"package": "com.github.vini2003.bambootweaks.mixin",
 	"compatibilityLevel": "JAVA_8",
 	"mixins": [
 		"MixinLivingEntity"

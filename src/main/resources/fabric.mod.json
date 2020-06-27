@@ -11,11 +11,14 @@
 		"sources": "https://github.com/vini2003/BambooTweaks"
 	},
 	"license": "GPLv3",
-	"icon": "assets/modid/icon.png",
+	"icon": "assets/bambootweaks/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
 			"bambootweaks.BambooTweaks"
+		],
+		"client": [
+			"bambootweaks.BambooTweaksClient"
 		]
 	},
 	"mixins": [

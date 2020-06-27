@@ -1,9 +1,8 @@
-package bambootweaks.block;
+package com.github.vini2003.bambootweaks.block;
 
-import bambootweaks.util.BlockClimbable;
+import com.github.vini2003.bambootweaks.utilities.BlockClimbable;
 import net.minecraft.block.Block;
 import net.minecraft.block.LadderBlock;
-import net.minecraft.util.math.Direction;
 
 public class ExposedLadderBlock extends LadderBlock implements BlockClimbable {
 	public ExposedLadderBlock(Block.Settings settings) {
