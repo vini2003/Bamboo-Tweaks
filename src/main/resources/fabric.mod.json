@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "nofeedback",
+  "version": "${version}",
+  "name": "No Feedback",
+  "description": "A mod disabling the system command feedback messages",
+  "authors": [
+    "vini2003"
+  ],
+  "contact": {
+    "email": "contact@vini2003.xyz"
+  },
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+  },
+  "mixins": [
+    "nofeedback.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.11.1",
+    "fabric": ">=0.30.0+1.16",
+    "minecraft": "1.16.5"
+  }
+}
