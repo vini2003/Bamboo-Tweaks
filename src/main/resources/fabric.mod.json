@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "nofeedback",
+  "id": "voidrising",
   "version": "${version}",
-  "name": "No Feedback",
-  "description": "A mod disabling the system command feedback and error messages",
+  "name": "Void Rising",
+  "description": "A mod where the void slowly rises and consumes the world.",
   "authors": [
     "vini2003"
   ],
@@ -14,18 +14,26 @@
   "environment": "*",
   "entrypoints": {
     "client": [
-      "vini2003.xyz.nofeedback.NoFeedbackClient"
+      "vini2003.xyz.voidrising.VoidRisingClient"
     ],
     "main": [
-      "vini2003.xyz.nofeedback.NoFeedback"
+      "vini2003.xyz.voidrising.VoidRising"
+    ],
+    "cardinal-components": [
+      "vini2003.xyz.voidrising.registry.common.VoidRisingComponents"
     ]
   },
   "mixins": [
-    "nofeedback.mixins.json"
+    "voidrising.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.11.1",
     "fabric": ">=0.30.0+1.16",
     "minecraft": "1.16.5"
+  },
+  "custom": {
+    "cardinal-components": [
+      "voidrising:world_void_component"
+    ]
   }
 }

@@ -10,6 +10,13 @@ archivesBaseName = project.mod_name
 group = project.mod_group
 version = project.mod_version + "+" + project.minecraft_version
 
+repositories {
+    maven {
+        name = "JitPack"
+        url = "https://jitpack.io"
+    }
+}
+
 dependencies {
     // Minecraft
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
@@ -22,6 +29,10 @@ dependencies {
 
     // Fabric API
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+
+    // Cardinal Components API
+    modImplementation "com.github.OnyxStudios.Cardinal-Components-API:Cardinal-Components-API:${project.cardinal_components_api_version}"
+    include "com.github.OnyxStudios.Cardinal-Components-API:Cardinal-Components-API:${project.cardinal_components_api_version}"
 }
 
 processResources {

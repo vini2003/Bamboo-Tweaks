@@ -1,10 +1,10 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "vini2003.xyz.nofeedback.mixin",
+  "package": "vini2003.xyz.voidrising.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "common.ServerCommandSourceMixin"
+
   ],
   "injectors": {
     "defaultRequire": 1

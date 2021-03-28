@@ -1,4 +1,4 @@
 {
-  "text.nofeedback.enable": "Command feedback and errors §aenabled§r.",
-  "text.nofeedback.disable": "Command feedback and errors are §cdisabled§r."
+  "text.voidrising.pause": "Void rising §aresumed§r.",
+  "text.voidrising.resume": "Void rising §cpaused§r."
 }
