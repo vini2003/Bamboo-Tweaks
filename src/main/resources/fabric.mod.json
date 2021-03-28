@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "voidrising",
+  "id": "thefloorislava",
   "version": "${version}",
-  "name": "Void Rising",
-  "description": "A mod where the void slowly rises and consumes the world.",
+  "name": "The Floor is Lava",
+  "description": "A mod where the floor is lava.",
   "authors": [
     "vini2003"
   ],
@@ -14,17 +14,17 @@
   "environment": "*",
   "entrypoints": {
     "client": [
-      "vini2003.xyz.voidrising.VoidRisingClient"
+      "vini2003.xyz.thefloorislava.TheFloorIsLavaClient"
     ],
     "main": [
-      "vini2003.xyz.voidrising.VoidRising"
+      "vini2003.xyz.thefloorislava.TheFloorIsLavaClient"
     ],
     "cardinal-components": [
-      "vini2003.xyz.voidrising.registry.common.VoidRisingComponents"
+      "vini2003.xyz.thefloorislava.registry.common.TheFloorIsLavaClientComponents"
     ]
   },
   "mixins": [
-    "voidrising.mixins.json"
+    "thefloorislava.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.11.1",
@@ -33,7 +33,7 @@
   },
   "custom": {
     "cardinal-components": [
-      "voidrising:world_void_component"
+      "thefloorislava:chunk_lava_component"
     ]
   }
 }
