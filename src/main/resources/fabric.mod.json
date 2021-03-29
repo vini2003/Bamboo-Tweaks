@@ -17,7 +17,7 @@
       "vini2003.xyz.thefloorislava.TheFloorIsLavaClient"
     ],
     "main": [
-      "vini2003.xyz.thefloorislava.TheFloorIsLavaClient"
+      "vini2003.xyz.thefloorislava.TheFloorIsLava"
     ],
     "cardinal-components": [
       "vini2003.xyz.thefloorislava.registry.common.TheFloorIsLavaClientComponents"

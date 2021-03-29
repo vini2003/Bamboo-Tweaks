@@ -4,6 +4,7 @@
   "package": "vini2003.xyz.thefloorislava.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "common.ChunkSectionMixin",
     "common.WorldMixin"
   ],
   "injectors": {
