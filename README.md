@@ -1,6 +1,6 @@
-# No Feedback
+# The Floor is Lava
 
-This disables all server command chat feedback.
+This makes the floor into lava.
 
 # Installing
 
