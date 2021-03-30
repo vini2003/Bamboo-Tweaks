@@ -2,6 +2,7 @@ package vini2003.xyz.thefloorislava;
 
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.util.Identifier;
+import vini2003.xyz.thefloorislava.registry.common.TheFloorIsLavaFeatures;
 
 public class TheFloorIsLava implements ModInitializer {
 	public static final String ID = "thefloorislava";
@@ -12,6 +13,6 @@ public class TheFloorIsLava implements ModInitializer {
 	
 	@Override
 	public void onInitialize() {
-
+		TheFloorIsLavaFeatures.initialize();
 	}
 }
