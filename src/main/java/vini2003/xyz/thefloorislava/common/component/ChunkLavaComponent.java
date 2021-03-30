@@ -4,10 +4,13 @@ import dev.onyxstudios.cca.api.v3.component.Component;
 import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
 import net.minecraft.block.Blocks;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.Heightmap;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.WorldChunk;
+import net.minecraft.world.gen.chunk.NoiseChunkGenerator;
 
 public class ChunkLavaComponent implements Component, ServerTickingComponent {
 	private boolean placed = false;
@@ -22,12 +25,21 @@ public class ChunkLavaComponent implements Component, ServerTickingComponent {
 	public void serverTick() {
 		WorldChunk worldChunk = ((WorldChunk) chunk);
 		
-		if (worldChunk.getWorld().getRegistryKey().equals(World.OVERWORLD) && !placed) {
+		int maxY =
+				worldChunk.getWorld().getRegistryKey().equals(World.OVERWORLD) ? 82 :
+						worldChunk.getWorld().getRegistryKey().equals(World.NETHER) ? 65 :
+								worldChunk.getWorld().getRegistryKey().equals(World.END) ? 45 : 0;
+		
+		if (!placed) {
 			placed = true;
 			
 			for (int x = chunk.getPos().getStartX(); x <= chunk.getPos().getEndX(); ++x) {
 				for (int z = chunk.getPos().getStartZ(); z <= chunk.getPos().getEndZ(); ++z) {
-					worldChunk.getWorld().setBlockState(new BlockPos(x, 70, z), Blocks.LAVA.getDefaultState());
+					int topY = Math.min(maxY, worldChunk.getWorld().getTopY(Heightmap.Type.WORLD_SURFACE, x, z));
+					
+					for (int y = maxY; y >= topY; --y) {
+						worldChunk.getWorld().setBlockState(new BlockPos(x, y, z), Blocks.LAVA.getDefaultState());
+					}
 				}
 			}
 		}
@@ -43,11 +55,11 @@ public class ChunkLavaComponent implements Component, ServerTickingComponent {
 	
 	@Override
 	public void readFromNbt(CompoundTag compoundTag) {
-		compoundTag.putBoolean("Placed", placed);
+		placed = compoundTag.getBoolean("Placed");
 	}
 	
 	@Override
 	public void writeToNbt(CompoundTag compoundTag) {
-		placed = compoundTag.getBoolean("Placed");
+		compoundTag.putBoolean("Placed", placed);
 	}
 }
