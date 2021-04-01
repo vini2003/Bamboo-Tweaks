@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "thefloorislava",
+  "id": "heal",
   "version": "${version}",
-  "name": "The Floor is Lava",
-  "description": "A mod where the floor is lava.",
+  "name": "Heal",
+  "description": "A mod adding a heal command.",
   "authors": [
     "vini2003"
   ],
@@ -14,14 +14,14 @@
   "environment": "*",
   "entrypoints": {
     "client": [
-      "vini2003.xyz.thefloorislava.TheFloorIsLavaClient"
+      "vini2003.xyz.heal.HealClient"
     ],
     "main": [
-      "vini2003.xyz.thefloorislava.TheFloorIsLava"
+      "vini2003.xyz.heal.Heal"
     ]
   },
   "mixins": [
-    "thefloorislava.mixins.json"
+    "heal.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.11.1",
