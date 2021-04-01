@@ -1,0 +1,11 @@
+accessWidener v1 named
+
+accessible class net/minecraft/block/TorchBlock;
+accessible class net/minecraft/block/TorchBlock;
+accessible class net/minecraft/block/LadderBlock;
+accessible class net/minecraft/block/DoorBlock;
+
+accessible method net/minecraft/block/TorchBlock; <init> (net/minecraft/block/AbstractBlock$Settings;net/minecraft/particle/ParticleEffect;)V
+accessible method net/minecraft/block/StairsBlock; <init> (net/minecraft/block/BlockState;net/minecraft/block/AbstractBlock$Settings;)V
+accessible method net/minecraft/block/LadderBlock; <init> (net/minecraft/block/AbstractBlock$Settings;)V
+accessible method net/minecraft/block/DoorBlock; <init> (net/minecraft/block/AbstractBlock$Settings;)V

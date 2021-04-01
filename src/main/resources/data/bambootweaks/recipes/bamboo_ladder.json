@@ -1,0 +1,17 @@
+{
+	"type": "crafting_shaped",
+	"pattern": [
+		"B B",
+		"BBB",
+		"B B"
+	],
+	"key": {
+		"B": {
+			"item": "minecraft:bamboo"
+		}
+	},
+	"result": {
+		"item": "bambootweaks:bamboo_ladder",
+		"count": 3
+	}
+}
