@@ -9,5 +9,16 @@
 	"block.bambootweaks.bamboo_torch": "Bamboo Torch",
 	"block.bambootweaks.bamboo_stairs": "Bamboo Stairs",
 	"block.bambootweaks.bamboo_door": "Bamboo Door",
+	"item.bambootweaks.dried_bamboo": "Dried Bamboo",
+	"block.bambootweaks.dried_bamboo_block": "Dried Bamboo Block",
+	"block.bambootweaks.dried_bamboo_fence_gate": "Dried Bamboo Fence Gate",
+	"block.bambootweaks.dried_bamboo_wall": "Dried Bamboo Wall",
+	"block.bambootweaks.dried_bamboo_fence": "Dried Bamboo Fence",
+	"block.bambootweaks.dried_bamboo_ladder": "Dried Bamboo Ladder",
+	"block.bambootweaks.dried_bamboo_rod": "Dried Bamboo Rod",
+	"block.bambootweaks.dried_bamboo_spike": "Dried Bamboo Spike",
+	"block.bambootweaks.dried_bamboo_torch": "Dried Bamboo Torch",
+	"block.bambootweaks.dried_bamboo_stairs": "Dried Bamboo Stairs",
+	"block.bambootweaks.dried_bamboo_door": "Dried Bamboo Door",
 	"itemGroup.bambootweaks.bambootweaks": "Bamboo Tweaks"
 }

@@ -1,4 +1,4 @@
-package vini2003.xyz.bambootweaks.registry;
+package vini2003.xyz.bambootweaks.registry.common;
 
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.item.ItemGroup;

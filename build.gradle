@@ -10,10 +10,6 @@ archivesBaseName = project.mod_name
 group = project.mod_group
 version = project.mod_version + "+" + project.minecraft_version
 
-loom {
-	accessWidener = file("src/main/resources/bambootweaks.accesswidener")
-}
-
 dependencies {
 	// Minecraft
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
