@@ -21,14 +21,13 @@ public class HealCommands {
 	
 	public static void initialize() {
 		CommandRegistrationCallback.EVENT.register((dispatcher, dedicated) -> {
-			LiteralCommandNode<ServerCommandSource> healRoot = CommandManager.literal("heal").build();
-			
-			LiteralCommandNode<ServerCommandSource> healHeal =
+			LiteralCommandNode<ServerCommandSource> heal =
 					CommandManager.literal("heal")
 							.requires((source) -> source.hasPermissionLevel(2))
 							.executes(HealCommands::heal)
 							.build();
 			
+			dispatcher.getRoot().addChild(heal);
 		});
 	}
 }
