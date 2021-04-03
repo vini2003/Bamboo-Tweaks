@@ -14,15 +14,16 @@
   "environment": "*",
   "entrypoints": {
     "client": [
-      "vini2003.xyz.heal.HealClient"
+      "vini2003.xyz.eco.EcoClient"
     ],
     "main": [
-      "vini2003.xyz.heal.Heal"
+      "vini2003.xyz.eco.Eco"
     ]
   },
   "mixins": [
-    "heal.mixins.json"
+    "eco.mixins.json"
   ],
+  "accessWidener": "eco.accesswidener",
   "depends": {
     "fabricloader": ">=0.11.1",
     "fabric": ">=0.30.0+1.16",

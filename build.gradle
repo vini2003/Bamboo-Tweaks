@@ -10,6 +10,27 @@ archivesBaseName = project.mod_name
 group = project.mod_group
 version = project.mod_version + "+" + project.minecraft_version
 
+loom {
+    accessWidener = file("src/main/resources/eco.accesswidener")
+}
+
+repositories {
+    maven {
+        name = "Hephaestus"
+        url = "https://hephaestus.dev/release"
+    }
+
+    maven {
+        name = "JitPack"
+        url = "https://jitpack.io"
+    }
+
+    maven {
+        name = "shedaniel"
+        url = "https://maven.shedaniel.me/"
+    }
+}
+
 dependencies {
     // Minecraft
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
@@ -22,6 +43,20 @@ dependencies {
 
     // Fabric API
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+
+    // Myron
+    modImplementation "dev.monarkhes:myron:${project.myron_version}"
+
+    // Mod Menu
+    modImplementation "io.github.prospector:modmenu:${project.mod_menu_version}"
+
+    // Cloth Config
+    modApi("me.shedaniel.cloth:cloth-config:${project.cloth_config_version}:fabric") {
+        exclude(group: "net.fabricmc.fabric-api")
+    }
+
+    // Cardinal Components API
+    modImplementation "com.github.OnyxStudios.Cardinal-Components-API:Cardinal-Components-API:${project.cardinal_components_api_version}"
 }
 
 processResources {

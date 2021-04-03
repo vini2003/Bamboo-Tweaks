@@ -1,10 +1,9 @@
-package vini2003.xyz.heal;
+package vini2003.xyz.eco;
 
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.util.Identifier;
-import vini2003.xyz.heal.registry.common.HealCommands;
 
-public class Heal implements ModInitializer {
+public class Eco implements ModInitializer {
 	public static final String ID = "heal";
 	
 	public static Identifier identifier(String path) {
@@ -13,6 +12,6 @@ public class Heal implements ModInitializer {
 	
 	@Override
 	public void onInitialize() {
-		HealCommands.initialize();
+	
 	}
 }

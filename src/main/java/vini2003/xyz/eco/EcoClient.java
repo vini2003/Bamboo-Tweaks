@@ -1,8 +1,8 @@
-package vini2003.xyz.heal;
+package vini2003.xyz.eco;
 
 import net.fabricmc.api.ClientModInitializer;
 
-public class HealClient implements ClientModInitializer {
+public class EcoClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 

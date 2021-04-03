@@ -1,10 +1,10 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "vini2003.xyz.heal.mixin",
+  "package": "vini2003.xyz.eco.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-
+    "common.GeneratorTypeMixin"
   ],
   "injectors": {
     "defaultRequire": 1
