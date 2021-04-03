@@ -5,7 +5,9 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryLookupCodec;
 import net.minecraft.world.BlockView;
@@ -20,6 +22,7 @@ import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.chunk.ChunkGeneratorSettings;
 import net.minecraft.world.gen.chunk.StructuresConfig;
 import net.minecraft.world.gen.chunk.VerticalBlockSample;
+import vini2003.xyz.eco.common.world.BiomeSourceCache;
 
 import java.util.Arrays;
 import java.util.Set;
@@ -39,16 +42,31 @@ public class EcoChunkGenerator extends ChunkGenerator {
 	private final long seed;
 	private final Registry<Biome> biomeRegistry;
 	
+	private final ThreadLocal<BiomeSourceCache> biomeCache;
+	
 	private final FastNoiseLite noise;
+	private final FastNoiseLite riverNoise;
 	
 	public EcoChunkGenerator(long seed, Registry<Biome> biomeRegistry) {
 		super(new EcoBiomeSource(biomeRegistry, seed), new StructuresConfig(false));
 		
 		this.seed = seed;
 		this.biomeRegistry = biomeRegistry;
+		this.biomeCache = ThreadLocal.withInitial(() -> new BiomeSourceCache(getBiomeSource()));
 		
 		this.noise = new FastNoiseLite((int) seed);
 		this.noise.SetNoiseType(FastNoiseLite.NoiseType.OpenSimplex2);
+		
+		this.riverNoise = new FastNoiseLite((int) seed);
+		this.riverNoise.SetNoiseType(FastNoiseLite.NoiseType.Cellular);
+		this.riverNoise.SetRotationType3D(FastNoiseLite.RotationType3D.ImproveXYPlanes);
+		this.riverNoise.SetFrequency(-0.02F);
+		this.riverNoise.SetFractalType(FastNoiseLite.FractalType.None);
+		this.riverNoise.SetCellularDistanceFunction(FastNoiseLite.CellularDistanceFunction.EuclideanSq);
+		this.riverNoise.SetCellularReturnType(FastNoiseLite.CellularReturnType.Distance);
+		this.riverNoise.SetCellularJitter(1F);
+		this.riverNoise.SetDomainWarpType(FastNoiseLite.DomainWarpType.OpenSimplex2);
+		this.riverNoise.SetDomainWarpAmp(70F);
 	}
 	
 	@Override
@@ -67,47 +85,57 @@ public class EcoChunkGenerator extends ChunkGenerator {
 			for (int z = chunk.getPos().getStartZ(); z <= chunk.getPos().getEndZ(); ++z) {
 				int t = 0;
 				
-				for (int y = 256; y > 0; --y) {
-					float mainSample = getNoiseAverage(x, z, 2) + Math.max(0F, 64F / y) - (float) ((10.0 / (y + 1.0)) - (10.0 / (y - 257.0)) - 0.155);
+				int h = getHeight(x, z, Heightmap.Type.WORLD_SURFACE_WG);
+				
+				for (int y = h + 5; y > h; --y) {
+					Biome biome = getBiome(x, z);
 					
-					mainSample /= (float) Math.log(y);
-					
-					Biome biome = biomeSource.getBiomeForNoiseGen(x, y, z);
-					
-					if (mainSample > 0.7F) {
-						for (int cY = y; cY > y - 5; --cY) {
-							if (biome.getCategory() == Biome.Category.DESERT) {
-								if (t == 0) {
-									chunk.setBlockState(new BlockPos(x, cY, z), Blocks.SAND.getDefaultState(), false);
-								} else {
-									chunk.setBlockState(new BlockPos(x, cY, z), Blocks.SANDSTONE.getDefaultState(), false);
-								}
-								
-								++t;
-								
-								if (t == 5) {
-									break;
-								}
+					if (t == 0) {
+						if (y > 96) {
+							chunk.setBlockState(new BlockPos(x, y, z), Blocks.SNOW_BLOCK.getDefaultState(), false);
+						} else {
+							if (y < 48) {
+								chunk.setBlockState(new BlockPos(x, y, z), Blocks.GRAVEL.getDefaultState(), false);
 							} else {
-								if (t == 0) {
-									if (cY > 512 * mainSample) {
-										chunk.setBlockState(new BlockPos(x, cY, z), Blocks.SNOW_BLOCK.getDefaultState(), false);
-									} else {
-										chunk.setBlockState(new BlockPos(x, cY, z), Blocks.GRASS_BLOCK.getDefaultState(), false);
+								boolean nearWater = false;
+								
+								for (int wX = x - 1; wX < x + 1; ++wX) {
+									for (int wZ = z - 1; wZ < z + 1; ++wZ) {
+										if (chunk.getBlockState(new BlockPos(wX, y, wZ)).getFluidState().isIn(FluidTags.WATER)) {
+											nearWater = true;
+										}
 									}
-								} else if (t < 4) {
-									chunk.setBlockState(new BlockPos(x, cY, z), Blocks.DIRT.getDefaultState(), false);
-								} else {
-									chunk.setBlockState(new BlockPos(x, cY, z), Blocks.STONE.getDefaultState(), false);
 								}
 								
-								++t;
-								
-								if (t == 5) {
-									break;
+								if (nearWater) {
+									chunk.setBlockState(new BlockPos(x, y, z), Blocks.GRAVEL.getDefaultState(), false);
+								} else {
+									if (biome.getCategory() == Biome.Category.DESERT) {
+										chunk.setBlockState(new BlockPos(x, y, z), Blocks.SAND.getDefaultState(), false);
+									} else {
+										chunk.setBlockState(new BlockPos(x, y, z), Blocks.GRASS_BLOCK.getDefaultState(), false);
+									}
 								}
 							}
 						}
+					} else if (t < 4) {
+						if (y < 48) {
+							chunk.setBlockState(new BlockPos(x, y, z), Blocks.GRAVEL.getDefaultState(), false);
+						} else {
+							if (biome.getCategory() == Biome.Category.DESERT) {
+								chunk.setBlockState(new BlockPos(x, y, z), Blocks.SANDSTONE.getDefaultState(), false);
+							} else {
+								chunk.setBlockState(new BlockPos(x, y, z), Blocks.DIRT.getDefaultState(), false);
+							}
+						}
+					} else {
+						chunk.setBlockState(new BlockPos(x, y, z), Blocks.STONE.getDefaultState(), false);
+					}
+					
+					++t;
+					
+					if (t == 5) {
+						break;
 					}
 				}
 			}
@@ -118,21 +146,19 @@ public class EcoChunkGenerator extends ChunkGenerator {
 	public void populateNoise(WorldAccess world, StructureAccessor accessor, Chunk chunk) {
 		for (int x = chunk.getPos().getStartX(); x <= chunk.getPos().getEndX(); ++x) {
 			for (int z = chunk.getPos().getStartZ(); z <= chunk.getPos().getEndZ(); ++z) {
-				for (int y = 256; y > 0; --y) {
-					float mainSample = getNoiseAverage(x, z, 2) + Math.max(0F, 64F / y) - (float) ((10.0 / (y + 1.0)) - (10.0 / (y - 257.0)) - 0.155);
-					
-					mainSample /= (float) Math.log(y);
-					
-					if (mainSample > 0.7F) {
-						for (int cY = y; cY > 0; --cY) {
-							float caveSample = noise.GetNoise(x, cY * 8F, z);
-							
-							if (cY < 16) {
-								chunk.setBlockState(new BlockPos(x, cY, z), Blocks.LAVA.getDefaultState(), false);
-							} else if (caveSample < 0.5F) {
-								chunk.setBlockState(new BlockPos(x, cY, z), Blocks.STONE.getDefaultState(), false);
-							}
-						}
+				int h = getHeight(x, z, Heightmap.Type.WORLD_SURFACE_WG);
+				
+				for (int y = h; y > 0; --y) {
+					if (y < 16) {
+						chunk.setBlockState(new BlockPos(x, y, z), Blocks.LAVA.getDefaultState(), false);
+					} else {
+						chunk.setBlockState(new BlockPos(x, y, z), Blocks.STONE.getDefaultState(), false);
+					}
+				}
+				
+				if (h < 48) {
+					for (int y = 48; y > h; --y) {
+						chunk.setBlockState(new BlockPos(x, y, z), Blocks.WATER.getDefaultState(), false);
 					}
 				}
 			}
@@ -141,7 +167,8 @@ public class EcoChunkGenerator extends ChunkGenerator {
 	
 	@Override
 	public int getHeight(int x, int z, Heightmap.Type heightmapType) {
-		return 0;
+		int h = (int) ((getNoiseAverage(x, z, 4)) / 2F * 256F);
+		return MathHelper.clamp(h, 0, 255);
 	}
 	
 	@Override
@@ -151,37 +178,26 @@ public class EcoChunkGenerator extends ChunkGenerator {
 		return new VerticalBlockSample(states);
 	}
 	
-	public float getNoise(float x, float z) {
-		return noise.GetNoise(x, z);
-	}
-
-	public float getNoise(float x, float y, int z) {
-		return noise.GetNoise(x, y, z);
-	}
-	
-	public float getNoise(float sample, int steps, float scale) {
+	public float getNoise(float x, float z, float scale, float depth) {
 		float result = 0F;
 		
-		for (int step = 0; step < steps; ++step) {
-			result += sample * scale;
+		for (int i = 1; i < depth * 32F; ++i) {
+			result += noise.GetNoise(x * scale, z * scale);
 			
-			scale /= 2F;
+			scale *= 0.5F;
 		}
 		
-		return result;
+		return (result + 1F) / 16F;
 	}
 	
 	public float getNoiseAverage(float x, float z, int radius) {
-		x /= 4F;
-		z /= 4F;
-		
 		float result = 0F;
 		
-		for (float rX = x - 16; rX < x + 16; rX += 8) {
-			for (float rZ = z - 16; rZ < z + 16; rZ += 8) {
+		for (float rX = x - radius; rX < x + radius; rX += 1) {
+			for (float rZ = z - radius; rZ < z + radius; rZ += 1) {
 				Biome biome = getBiome((int) rX, (int) rZ);
-				
-				result += getNoise(rX / (biome.getScale() * 16F), rZ / (biome.getScale() * 16F));
+		
+				result += getNoise(rX, rZ, biome.getScale(), biome.getDepth());
 			}
 		}
 		
