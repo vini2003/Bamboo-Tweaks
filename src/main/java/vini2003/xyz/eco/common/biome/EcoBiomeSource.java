@@ -66,7 +66,7 @@
 		@Override
 		public Biome getBiomeForNoiseGen(int biomeX, int biomeY, int biomeZ) {
 			float humidity = humidityNoise.GetNoise(biomeX, biomeZ);
-			float temperature = temperatureNoise.GetNoise(biomeX, biomeZ);
+			float temperature = humidityNoise.GetNoise(biomeX, biomeZ);
 			
 			if (humidity > 0F) {
 				if (temperature > 0.5F) {

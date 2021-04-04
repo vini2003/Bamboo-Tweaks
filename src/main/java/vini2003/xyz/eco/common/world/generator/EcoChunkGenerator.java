@@ -166,7 +166,7 @@ public class EcoChunkGenerator extends ChunkGenerator {
 	
 	@Override
 	public int getHeight(int x, int z, Heightmap.Type heightmapType) {
-		int h = (int) ((getNoiseAverage(x, z, 4)) / 2F * 256F);
+		int h = (int) ((getNoiseAverage(x, z, 5)) / 2F * 256F);
 		return MathHelper.clamp(h, 0, 255);
 	}
 	
@@ -183,20 +183,26 @@ public class EcoChunkGenerator extends ChunkGenerator {
 		for (int i = 1; i < 8; ++i) {
 			result += terrainNoise.GetNoise(x * scale, z * scale);
 			
-			scale *= 0.5F;
+			scale /= 0.85F;
 		}
 		
-		return (result + 1F) / 16F;
+		return (1F + result + depth) / 16F;
 	}
 	
 	public float getNoiseAverage(float x, float z, int radius) {
 		float result = 0F;
 		
-		for (float rX = x - radius; rX < x + radius; rX += 1) {
-			for (float rZ = z - radius; rZ < z + radius; rZ += 1) {
-				Biome biome = getBiome((int) rX, (int) rZ);
+		for (float rX = -radius; rX <= radius; ++rX) {
+			for (float rZ = -radius; rZ <= radius; ++rZ) {
+				double distance = rX * rX + rZ * rZ;
+				
+				if (distance > 5 * 5) {
+					continue;
+				}
+				
+				Biome biome = getBiome((int) (x + rX), (int) (z + rZ));
 		
-				result += getNoise(rX, rZ, 0.2F, 0);
+				result += getNoise(x + rX, z + rZ, biome.getScale(), biome.getDepth());
 			}
 		}
 		
@@ -205,8 +211,12 @@ public class EcoChunkGenerator extends ChunkGenerator {
 		return result;
 	}
 	
+	private double getNoiseFalloff(int y) {
+		return (10.0 / (y + 1.0)) - (10.0 / (y - 257.0)) - 0.155;
+	}
+	
 	public Biome getBiome(int x, int z) {
-		return biomeSource.getBiomeForNoiseGen(x, 0, z);
+		return biomeCache.get().getBiome(x, z);
 	}
 	
 	public Biome getBiome(int x, int y, int z) {
