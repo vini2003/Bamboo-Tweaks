@@ -10,6 +10,7 @@
 	import net.minecraft.world.biome.Biome;
 	import net.minecraft.world.biome.BiomeKeys;
 	import net.minecraft.world.biome.source.BiomeSource;
+	import vini2003.xyz.eco.common.world.generator.EcoChunkGenerator;
 	
 	public class EcoBiomeSource extends BiomeSource {
 		public static final Codec<EcoBiomeSource> CODEC =
@@ -33,11 +34,15 @@
 		private final FastNoiseLite humidityNoise;
 		private final FastNoiseLite temperatureNoise;
 		
-		public EcoBiomeSource(Registry<Biome> biomeRegistry, long seed) {
+		private final EcoChunkGenerator chunkGenerator;
+		
+		public EcoBiomeSource(Registry<Biome> biomeRegistry, long seed, EcoChunkGenerator chunkGenerator) {
 			super(ImmutableList.of());
 			
 			this.seed = seed;
 			this.biomeRegistry = biomeRegistry;
+			
+			this.chunkGenerator = chunkGenerator;
 			
 			this.waterNoise = new FastNoiseLite((int) seed << 2);
 			this.waterNoise.SetNoiseType(FastNoiseLite.NoiseType.OpenSimplex2);

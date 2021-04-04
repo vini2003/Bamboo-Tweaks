@@ -55,6 +55,7 @@ public class EcoChunkGenerator extends ChunkGenerator {
 		
 		this.terrainNoise = new FastNoiseLite((int) seed);
 		this.terrainNoise.SetNoiseType(FastNoiseLite.NoiseType.OpenSimplex2);
+		this.terrainNoise.SetFrequency(-0.001F);
 		
 		this.riverNoise = new FastNoiseLite((int) seed);
 		this.riverNoise.SetNoiseType(FastNoiseLite.NoiseType.Cellular);
@@ -166,7 +167,7 @@ public class EcoChunkGenerator extends ChunkGenerator {
 	
 	@Override
 	public int getHeight(int x, int z, Heightmap.Type heightmapType) {
-		int h = (int) ((getNoiseAverage(x, z, 5)) / 2F * 256F);
+		int h = (int) ((getNoiseAverage(x, z, 8)) / 2F * 256F);
 		return MathHelper.clamp(h, 0, 255);
 	}
 	
@@ -181,7 +182,7 @@ public class EcoChunkGenerator extends ChunkGenerator {
 		float result = 0F;
 		
 		for (int i = 1; i < 8; ++i) {
-			result += terrainNoise.GetNoise(x * scale, z * scale);
+			result += terrainNoise.GetNoise(x, z);
 			
 			scale /= 0.85F;
 		}
@@ -196,13 +197,13 @@ public class EcoChunkGenerator extends ChunkGenerator {
 			for (float rZ = -radius; rZ <= radius; ++rZ) {
 				double distance = rX * rX + rZ * rZ;
 				
-				if (distance > 5 * 5) {
+				if (distance > 8 * 8) {
 					continue;
 				}
 				
 				Biome biome = getBiome((int) (x + rX), (int) (z + rZ));
 		
-				result += getNoise(x + rX, z + rZ, biome.getScale(), biome.getDepth());
+				result += getNoise(x + rX, z + rZ, biome.getScale(), biome.getDepth() / 2);
 			}
 		}
 		
