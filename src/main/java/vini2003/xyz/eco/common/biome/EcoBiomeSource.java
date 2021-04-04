@@ -65,20 +65,13 @@
 		
 		@Override
 		public Biome getBiomeForNoiseGen(int biomeX, int biomeY, int biomeZ) {
-			float humidity = humidityNoise.GetNoise(biomeX >> 4, biomeZ >> 4);
-			float temperature = temperatureNoise.GetNoise(biomeX >> 4, biomeZ >> 4);
-			//float water = waterNoise.GetNoise(biomeX / 128F, biomeZ / 128F);
-			//
-			//if (water > 0F) {
-			//	return biomeRegistry.get(BiomeKeys.OCEAN);
-			//}
+			float humidity = humidityNoise.GetNoise(biomeX, biomeZ);
+			float temperature = temperatureNoise.GetNoise(biomeX, biomeZ);
 			
-			if (humidity > 0F) { // High humidity.
-				if (temperature > 0.5F) { // High temperature.
-					// Both together result in a Jungle.
+			if (humidity > 0F) {
+				if (temperature > 0.5F) {
 					return biomeRegistry.get(BiomeKeys.JUNGLE);
 				} else if (temperature > 0F) {
-					// Both together result in an Oak Forest or a Birch Forest.
 					if (temperature > 0.25F) {
 						return biomeRegistry.get(BiomeKeys.FOREST);
 					} else {
@@ -87,7 +80,7 @@
 				} else {
 					return biomeRegistry.get(BiomeKeys.SNOWY_TUNDRA);
 				}
-			} else { // Low humidity.
+			} else {
 				if (temperature > 0.5F) {
 					return biomeRegistry.get(BiomeKeys.BADLANDS);
 				} else if (temperature > 0F) {
@@ -96,12 +89,6 @@
 					return biomeRegistry.get(BiomeKeys.SNOWY_MOUNTAINS);
 				}
 			}
-			
-			//float sample = noise.GetNoise(biomeX / 512F, biomeZ / 512F) + 1F;
-			//
-			//float steps = 2F / BIOMES.size();
-			//
-			//return biomeRegistry.get(BIOMES.get((int) (sample / steps)));
 		}
 		
 		static {

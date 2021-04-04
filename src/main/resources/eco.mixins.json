@@ -4,6 +4,8 @@
   "package": "vini2003.xyz.eco.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "common.DimensionTypeMixin",
+    "common.GeneratorOptionsMixin",
     "common.GeneratorTypeMixin"
   ],
   "injectors": {
