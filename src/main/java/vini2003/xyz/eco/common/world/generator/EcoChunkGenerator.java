@@ -15,13 +15,12 @@ import net.minecraft.world.ChunkRegion;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.source.BiomeSource;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.StructureAccessor;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.chunk.ChunkGeneratorSettings;
 import net.minecraft.world.gen.chunk.StructuresConfig;
 import net.minecraft.world.gen.chunk.VerticalBlockSample;
+import vini2003.xyz.eco.common.biome.EcoBiomeSource;
 import vini2003.xyz.eco.common.world.BiomeSourceCache;
 
 import java.util.Arrays;
@@ -44,9 +43,9 @@ public class EcoChunkGenerator extends ChunkGenerator {
 	
 	private final ThreadLocal<BiomeSourceCache> biomeCache;
 	
-	private final FastNoiseLite noise;
+	private final FastNoiseLite terrainNoise;
 	private final FastNoiseLite riverNoise;
-	
+
 	public EcoChunkGenerator(long seed, Registry<Biome> biomeRegistry) {
 		super(new EcoBiomeSource(biomeRegistry, seed), new StructuresConfig(false));
 		
@@ -54,8 +53,8 @@ public class EcoChunkGenerator extends ChunkGenerator {
 		this.biomeRegistry = biomeRegistry;
 		this.biomeCache = ThreadLocal.withInitial(() -> new BiomeSourceCache(getBiomeSource()));
 		
-		this.noise = new FastNoiseLite((int) seed);
-		this.noise.SetNoiseType(FastNoiseLite.NoiseType.OpenSimplex2);
+		this.terrainNoise = new FastNoiseLite((int) seed);
+		this.terrainNoise.SetNoiseType(FastNoiseLite.NoiseType.OpenSimplex2);
 		
 		this.riverNoise = new FastNoiseLite((int) seed);
 		this.riverNoise.SetNoiseType(FastNoiseLite.NoiseType.Cellular);
@@ -91,10 +90,10 @@ public class EcoChunkGenerator extends ChunkGenerator {
 					Biome biome = getBiome(x, z);
 					
 					if (t == 0) {
-						if (y > 96) {
-							chunk.setBlockState(new BlockPos(x, y, z), Blocks.SNOW_BLOCK.getDefaultState(), false);
+						if (y > 96 && y == h + 1) {
+							chunk.setBlockState(new BlockPos(x, y, z), Blocks.SNOW.getDefaultState(), false);
 						} else {
-							if (y < 48) {
+							if (y < 64) {
 								chunk.setBlockState(new BlockPos(x, y, z), Blocks.GRAVEL.getDefaultState(), false);
 							} else {
 								boolean nearWater = false;
@@ -119,7 +118,7 @@ public class EcoChunkGenerator extends ChunkGenerator {
 							}
 						}
 					} else if (t < 4) {
-						if (y < 48) {
+						if (y < 64) {
 							chunk.setBlockState(new BlockPos(x, y, z), Blocks.GRAVEL.getDefaultState(), false);
 						} else {
 							if (biome.getCategory() == Biome.Category.DESERT) {
@@ -156,8 +155,8 @@ public class EcoChunkGenerator extends ChunkGenerator {
 					}
 				}
 				
-				if (h < 48) {
-					for (int y = 48; y > h; --y) {
+				if (h < 64) {
+					for (int y = 64; y > h; --y) {
 						chunk.setBlockState(new BlockPos(x, y, z), Blocks.WATER.getDefaultState(), false);
 					}
 				}
@@ -181,8 +180,8 @@ public class EcoChunkGenerator extends ChunkGenerator {
 	public float getNoise(float x, float z, float scale, float depth) {
 		float result = 0F;
 		
-		for (int i = 1; i < depth * 32F; ++i) {
-			result += noise.GetNoise(x * scale, z * scale);
+		for (int i = 1; i < 8; ++i) {
+			result += terrainNoise.GetNoise(x * scale, z * scale);
 			
 			scale *= 0.5F;
 		}
@@ -197,7 +196,7 @@ public class EcoChunkGenerator extends ChunkGenerator {
 			for (float rZ = z - radius; rZ < z + radius; rZ += 1) {
 				Biome biome = getBiome((int) rX, (int) rZ);
 		
-				result += getNoise(rX, rZ, biome.getScale(), biome.getDepth());
+				result += getNoise(rX, rZ, 0.2F, 0);
 			}
 		}
 		

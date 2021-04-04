@@ -1,4 +1,4 @@
-	package vini2003.xyz.eco.common.world.generator;
+	package vini2003.xyz.eco.common.biome;
 	
 	import Auburn.FastNoiseLite.Java.FastNoiseLite;
 	import com.google.common.collect.ImmutableList;
@@ -10,9 +10,6 @@
 	import net.minecraft.world.biome.Biome;
 	import net.minecraft.world.biome.BiomeKeys;
 	import net.minecraft.world.biome.source.BiomeSource;
-	import vini2003.xyz.eco.common.world.BiomeSourceCache;
-	
-	import java.util.List;
 	
 	public class EcoBiomeSource extends BiomeSource {
 		public static final Codec<EcoBiomeSource> CODEC =
@@ -32,7 +29,9 @@
 		private final long seed;
 		private final Registry<Biome> biomeRegistry;
 		
-		private final FastNoiseLite noise;
+		private final FastNoiseLite waterNoise;
+		private final FastNoiseLite humidityNoise;
+		private final FastNoiseLite temperatureNoise;
 		
 		public EcoBiomeSource(Registry<Biome> biomeRegistry, long seed) {
 			super(ImmutableList.of());
@@ -40,8 +39,18 @@
 			this.seed = seed;
 			this.biomeRegistry = biomeRegistry;
 			
-			this.noise = new FastNoiseLite((int) seed);
-			this.noise.SetNoiseType(FastNoiseLite.NoiseType.Perlin);
+			this.waterNoise = new FastNoiseLite((int) seed << 2);
+			this.waterNoise.SetNoiseType(FastNoiseLite.NoiseType.OpenSimplex2);
+			
+			this.humidityNoise = new FastNoiseLite((int) seed >> 2);
+			this.humidityNoise.SetNoiseType(FastNoiseLite.NoiseType.OpenSimplex2);
+			this.humidityNoise.SetFrequency(-0.005F);
+			this.humidityNoise.SetFractalType(FastNoiseLite.FractalType.None);
+			
+			this.temperatureNoise = new FastNoiseLite((int) seed << 4);
+			this.temperatureNoise.SetNoiseType(FastNoiseLite.NoiseType.OpenSimplex2);
+			this.temperatureNoise.SetFrequency(-0.005F);
+			this.temperatureNoise.SetFractalType(FastNoiseLite.FractalType.None);
 		}
 		
 		@Override
@@ -56,11 +65,43 @@
 		
 		@Override
 		public Biome getBiomeForNoiseGen(int biomeX, int biomeY, int biomeZ) {
-			float sample = noise.GetNoise(biomeX / 512F, biomeZ / 512F) + 1F;
+			float humidity = humidityNoise.GetNoise(biomeX >> 4, biomeZ >> 4);
+			float temperature = temperatureNoise.GetNoise(biomeX >> 4, biomeZ >> 4);
+			//float water = waterNoise.GetNoise(biomeX / 128F, biomeZ / 128F);
+			//
+			//if (water > 0F) {
+			//	return biomeRegistry.get(BiomeKeys.OCEAN);
+			//}
 			
-			float steps = 2F / BIOMES.size();
+			if (humidity > 0F) { // High humidity.
+				if (temperature > 0.5F) { // High temperature.
+					// Both together result in a Jungle.
+					return biomeRegistry.get(BiomeKeys.JUNGLE);
+				} else if (temperature > 0F) {
+					// Both together result in an Oak Forest or a Birch Forest.
+					if (temperature > 0.25F) {
+						return biomeRegistry.get(BiomeKeys.FOREST);
+					} else {
+						return biomeRegistry.get(BiomeKeys.BIRCH_FOREST);
+					}
+				} else {
+					return biomeRegistry.get(BiomeKeys.SNOWY_TUNDRA);
+				}
+			} else { // Low humidity.
+				if (temperature > 0.5F) {
+					return biomeRegistry.get(BiomeKeys.BADLANDS);
+				} else if (temperature > 0F) {
+					return biomeRegistry.get(BiomeKeys.DESERT);
+				} else {
+					return biomeRegistry.get(BiomeKeys.SNOWY_MOUNTAINS);
+				}
+			}
 			
-			return biomeRegistry.get(BIOMES.get((int) (sample / steps)));
+			//float sample = noise.GetNoise(biomeX / 512F, biomeZ / 512F) + 1F;
+			//
+			//float steps = 2F / BIOMES.size();
+			//
+			//return biomeRegistry.get(BIOMES.get((int) (sample / steps)));
 		}
 		
 		static {
