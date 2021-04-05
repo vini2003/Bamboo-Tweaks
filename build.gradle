@@ -57,6 +57,10 @@ dependencies {
 
     // Cardinal Components API
     modImplementation "com.github.OnyxStudios.Cardinal-Components-API:Cardinal-Components-API:${project.cardinal_components_api_version}"
+
+    // Cloth API
+    modApi "me.shedaniel.cloth.api:cloth-api:${project.cloth_api_version}"
+    include "me.shedaniel.cloth.api:cloth-api:${project.cloth_api_version}"
 }
 
 processResources {

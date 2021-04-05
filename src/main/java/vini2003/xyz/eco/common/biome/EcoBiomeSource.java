@@ -7,10 +7,11 @@
 	import net.minecraft.util.registry.Registry;
 	import net.minecraft.util.registry.RegistryKey;
 	import net.minecraft.util.registry.RegistryLookupCodec;
+	import net.minecraft.world.World;
 	import net.minecraft.world.biome.Biome;
 	import net.minecraft.world.biome.BiomeKeys;
 	import net.minecraft.world.biome.source.BiomeSource;
-	import vini2003.xyz.eco.common.world.generator.EcoChunkGenerator;
+	import net.minecraft.world.gen.surfacebuilder.BadlandsSurfaceBuilder;
 	
 	public class EcoBiomeSource extends BiomeSource {
 		public static final Codec<EcoBiomeSource> CODEC =
@@ -34,15 +35,11 @@
 		private final FastNoiseLite humidityNoise;
 		private final FastNoiseLite temperatureNoise;
 		
-		private final EcoChunkGenerator chunkGenerator;
-		
-		public EcoBiomeSource(Registry<Biome> biomeRegistry, long seed, EcoChunkGenerator chunkGenerator) {
+		public EcoBiomeSource(Registry<Biome> biomeRegistry, long seed) {
 			super(ImmutableList.of());
 			
 			this.seed = seed;
 			this.biomeRegistry = biomeRegistry;
-			
-			this.chunkGenerator = chunkGenerator;
 			
 			this.waterNoise = new FastNoiseLite((int) seed << 2);
 			this.waterNoise.SetNoiseType(FastNoiseLite.NoiseType.OpenSimplex2);
@@ -70,30 +67,32 @@
 		
 		@Override
 		public Biome getBiomeForNoiseGen(int biomeX, int biomeY, int biomeZ) {
-			float humidity = humidityNoise.GetNoise(biomeX, biomeZ);
-			float temperature = humidityNoise.GetNoise(biomeX, biomeZ);
+			return biomeRegistry.get(BiomeKeys.PLAINS);
 			
-			if (humidity > 0F) {
-				if (temperature > 0.5F) {
-					return biomeRegistry.get(BiomeKeys.JUNGLE);
-				} else if (temperature > 0F) {
-					if (temperature > 0.25F) {
-						return biomeRegistry.get(BiomeKeys.FOREST);
-					} else {
-						return biomeRegistry.get(BiomeKeys.BIRCH_FOREST);
-					}
-				} else {
-					return biomeRegistry.get(BiomeKeys.SNOWY_TUNDRA);
-				}
-			} else {
-				if (temperature > 0.5F) {
-					return biomeRegistry.get(BiomeKeys.BADLANDS);
-				} else if (temperature > 0F) {
-					return biomeRegistry.get(BiomeKeys.DESERT);
-				} else {
-					return biomeRegistry.get(BiomeKeys.SNOWY_MOUNTAINS);
-				}
-			}
+			//float humidity = humidityNoise.GetNoise(biomeX, biomeZ);
+			//float temperature = humidityNoise.GetNoise(biomeX, biomeZ);
+			//
+			//if (humidity > 0F) {
+			//	if (temperature > 0.5F) {
+			//		return biomeRegistry.get(BiomeKeys.JUNGLE);
+			//	} else if (temperature > 0F) {
+			//		if (temperature > 0.25F) {
+			//			return biomeRegistry.get(BiomeKeys.FOREST);
+			//		} else {
+			//			return biomeRegistry.get(BiomeKeys.BIRCH_FOREST);
+			//		}
+			//	} else {
+			//		return biomeRegistry.get(BiomeKeys.SNOWY_TUNDRA);
+			//	}
+			//} else {
+			//	if (temperature > 0.5F) {
+			//		return biomeRegistry.get(BiomeKeys.BADLANDS);
+			//	} else if (temperature > 0F) {
+			//		return biomeRegistry.get(BiomeKeys.DESERT);
+			//	} else {
+			//		return biomeRegistry.get(BiomeKeys.SNOWY_MOUNTAINS);
+			//	}
+			//}
 		}
 		
 		static {
