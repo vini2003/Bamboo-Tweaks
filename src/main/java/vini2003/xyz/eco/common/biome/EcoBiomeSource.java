@@ -12,6 +12,10 @@
 	import net.minecraft.world.biome.BiomeKeys;
 	import net.minecraft.world.biome.source.BiomeSource;
 	import net.minecraft.world.gen.surfacebuilder.BadlandsSurfaceBuilder;
+	import vini2003.xyz.eco.common.world.layer.base.AggregateLayer;
+	import vini2003.xyz.eco.common.world.layer.implementation.mountain.MountainAggregateLayer;
+	import vini2003.xyz.eco.common.world.layer.implementation.ocean.OceanAggregateLayer;
+	import vini2003.xyz.eco.common.world.layer.implementation.plain.PlainAggregateLayer;
 	
 	public class EcoBiomeSource extends BiomeSource {
 		public static final Codec<EcoBiomeSource> CODEC =
@@ -31,9 +35,11 @@
 		private final long seed;
 		private final Registry<Biome> biomeRegistry;
 		
-		private final FastNoiseLite waterNoise;
-		private final FastNoiseLite humidityNoise;
-		private final FastNoiseLite temperatureNoise;
+		private final AggregateLayer mountainLayer;
+		private final AggregateLayer plainLayer;
+		private final AggregateLayer oceanLayer;
+		
+		private final FastNoiseLite plainNoise;
 		
 		public EcoBiomeSource(Registry<Biome> biomeRegistry, long seed) {
 			super(ImmutableList.of());
@@ -41,18 +47,12 @@
 			this.seed = seed;
 			this.biomeRegistry = biomeRegistry;
 			
-			this.waterNoise = new FastNoiseLite((int) seed << 2);
-			this.waterNoise.SetNoiseType(FastNoiseLite.NoiseType.OpenSimplex2);
+			this.mountainLayer = MountainAggregateLayer.create(seed);
+			this.plainLayer = PlainAggregateLayer.create(seed);
+			this.oceanLayer = OceanAggregateLayer.create(seed);
 			
-			this.humidityNoise = new FastNoiseLite((int) seed >> 2);
-			this.humidityNoise.SetNoiseType(FastNoiseLite.NoiseType.OpenSimplex2);
-			this.humidityNoise.SetFrequency(-0.005F);
-			this.humidityNoise.SetFractalType(FastNoiseLite.FractalType.None);
-			
-			this.temperatureNoise = new FastNoiseLite((int) seed << 4);
-			this.temperatureNoise.SetNoiseType(FastNoiseLite.NoiseType.OpenSimplex2);
-			this.temperatureNoise.SetFrequency(-0.005F);
-			this.temperatureNoise.SetFractalType(FastNoiseLite.FractalType.None);
+			this.plainNoise = new FastNoiseLite((int) seed);
+			this.plainNoise.SetFrequency(0.025F);
 		}
 		
 		@Override
@@ -67,32 +67,27 @@
 		
 		@Override
 		public Biome getBiomeForNoiseGen(int biomeX, int biomeY, int biomeZ) {
-			return biomeRegistry.get(BiomeKeys.PLAINS);
+			int mountainHeight = mountainLayer.getHeightLayer().getHeight(biomeX, biomeZ);
+			int plainHeight = plainLayer.getHeightLayer().getHeight(biomeX, biomeZ);
+			int oceanHeight = oceanLayer.getHeightLayer().getHeight(biomeX, biomeZ);
 			
-			//float humidity = humidityNoise.GetNoise(biomeX, biomeZ);
-			//float temperature = humidityNoise.GetNoise(biomeX, biomeZ);
-			//
-			//if (humidity > 0F) {
-			//	if (temperature > 0.5F) {
-			//		return biomeRegistry.get(BiomeKeys.JUNGLE);
-			//	} else if (temperature > 0F) {
-			//		if (temperature > 0.25F) {
-			//			return biomeRegistry.get(BiomeKeys.FOREST);
-			//		} else {
-			//			return biomeRegistry.get(BiomeKeys.BIRCH_FOREST);
-			//		}
-			//	} else {
-			//		return biomeRegistry.get(BiomeKeys.SNOWY_TUNDRA);
-			//	}
-			//} else {
-			//	if (temperature > 0.5F) {
-			//		return biomeRegistry.get(BiomeKeys.BADLANDS);
-			//	} else if (temperature > 0F) {
-			//		return biomeRegistry.get(BiomeKeys.DESERT);
-			//	} else {
-			//		return biomeRegistry.get(BiomeKeys.SNOWY_MOUNTAINS);
-			//	}
-			//}
+			if (mountainHeight > plainHeight && mountainHeight > oceanHeight) {
+				return biomeRegistry.get(BiomeKeys.MOUNTAINS);
+			} else if (plainHeight > oceanHeight) {
+				float sample = plainNoise.GetNoise(biomeX / 32.0F, biomeZ / 32.0F);
+				
+				if (sample < -0.5F) {
+					return biomeRegistry.get(BiomeKeys.PLAINS);
+				} else if (sample < 0.0F) {
+					return biomeRegistry.get(BiomeKeys.FOREST);
+				} else if (sample < 0.5F) {
+					return biomeRegistry.get(BiomeKeys.BIRCH_FOREST);
+				} else {
+					return biomeRegistry.get(BiomeKeys.JUNGLE);
+				}
+			} else {
+				return biomeRegistry.get(BiomeKeys.OCEAN);
+			}
 		}
 		
 		static {
