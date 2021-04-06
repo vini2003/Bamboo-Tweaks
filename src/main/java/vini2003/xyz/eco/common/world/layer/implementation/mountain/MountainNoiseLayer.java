@@ -41,7 +41,7 @@ public class MountainNoiseLayer extends NoiseLayer {
 		}
 
 		float distance = (float) Math.sqrt(oX * oX + oZ * oZ);
-		float result = NoiseUtils.normalize(mountainNoise.GetNoise(x, z));
+		float result = NoiseUtils.normalize(NoiseUtils.getNoise(mountainNoise, x, z, 8));
 		
 		return (1.0F - (distance - 384.0F) / (64.0F + Math.abs(distance - 384.0F))) * 0.375F * result;
 	}

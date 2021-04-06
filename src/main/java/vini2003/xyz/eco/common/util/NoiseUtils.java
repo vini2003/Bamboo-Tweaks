@@ -1,5 +1,7 @@
 package vini2003.xyz.eco.common.util;
 
+import Auburn.FastNoiseLite.Java.FastNoiseLite;
+
 public class NoiseUtils {
 	/**
 	 * Normalize a noise sample to the range [0..1].
@@ -9,5 +11,24 @@ public class NoiseUtils {
 	public static float normalize(float sample) {
 		// We assume that it is [-1..1] by default.
 		return NormalizeUtils.normalize(sample, -1.0F, 1.0F, 0.0F, 1.0F);
+	}
+	
+	public static float getNoise(FastNoiseLite noise, int x, int z, int octaves) {
+		float total = 0.0F;
+		
+		float frequency = 1.0F;
+		float amplitude = 1.0F;
+		float maximum = 0.0F;
+		float persistence = 0.33F;
+		
+		for (int i = 0; i < octaves; ++i) {
+			total += noise.GetNoise(x * frequency, z * frequency) * amplitude;
+			
+			maximum += amplitude;
+			amplitude *= persistence;
+			frequency *= 2.0F;
+		}
+		
+		return total / maximum;
 	}
 }

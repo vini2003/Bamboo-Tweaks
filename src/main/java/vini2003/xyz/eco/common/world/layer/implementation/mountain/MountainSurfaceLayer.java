@@ -39,8 +39,8 @@ public class MountainSurfaceLayer extends SurfaceLayer {
 					}
 				}
 				
-				if (height > 148 + (16 * snow)) {
-					for (int y = height - 1; y > 148 + (16 * snow); --y) {
+				if (height > 136 + (16 * snow)) {
+					for (int y = height - 1; y > 136 + (16 * snow); --y) {
 						chunk.setBlockState(new BlockPos(x, y, z), Blocks.SNOW_BLOCK.getDefaultState(), false);
 					}
 					
