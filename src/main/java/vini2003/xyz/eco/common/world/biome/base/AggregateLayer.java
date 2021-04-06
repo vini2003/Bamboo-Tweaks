@@ -1,4 +1,4 @@
-package vini2003.xyz.eco.common.world.layer.base;
+package vini2003.xyz.eco.common.world.biome.base;
 
 import net.minecraft.world.chunk.Chunk;
 
@@ -31,15 +31,11 @@ public class AggregateLayer {
 		return surfaceLayer;
 	}
 	
-	public final void buildSubstrate(Chunk chunk) {
-		//if (substrateLayer instanceof SharpMountainSubstrateLayer) {
-			substrateLayer.build(chunk);
-		//}
+	public final void buildSubstrate(Chunk chunk, int x, int z) {
+		substrateLayer.build(chunk, x, z);
 	}
 	
-	public final void buildSurface(Chunk chunk) {
-		//if (surfaceLayer instanceof SharpMountainSurfaceLayer) {
-			surfaceLayer.build(chunk);
-		//}
+	public final void buildSurface(Chunk chunk, int x, int z) {
+		surfaceLayer.build(chunk, x, z);
 	}
 }

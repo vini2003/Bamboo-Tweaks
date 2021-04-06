@@ -4,22 +4,15 @@
 	import com.google.common.collect.ImmutableList;
 	import com.mojang.serialization.Codec;
 	import com.mojang.serialization.codecs.RecordCodecBuilder;
-	import net.minecraft.util.math.BlockPos;
 	import net.minecraft.util.registry.Registry;
 	import net.minecraft.util.registry.RegistryKey;
 	import net.minecraft.util.registry.RegistryLookupCodec;
 	import net.minecraft.world.biome.Biome;
 	import net.minecraft.world.biome.BiomeKeys;
 	import net.minecraft.world.biome.source.BiomeSource;
-	import vini2003.xyz.eco.common.util.NoiseUtils;
-	import vini2003.xyz.eco.common.world.layer.base.AggregateLayer;
-	import vini2003.xyz.eco.common.world.layer.implementation.hill.HillAggregateLayer;
-	import vini2003.xyz.eco.common.world.layer.implementation.mountain.MountainAggregateLayer;
-	import vini2003.xyz.eco.common.world.layer.implementation.ocean.OceanAggregateLayer;
-	import vini2003.xyz.eco.common.world.layer.implementation.plain.PlainAggregateLayer;
-	
-	import java.util.Arrays;
-	import java.util.Comparator;
+	import vini2003.xyz.eco.common.util.BiomeUtils;
+	import vini2003.xyz.eco.common.world.biome.base.AggregateLayer;
+	import vini2003.xyz.eco.common.world.biome.implementation.Mountains;
 	
 	public class EcoBiomeSource extends BiomeSource {
 		public static final Codec<EcoBiomeSource> CODEC =
@@ -40,14 +33,6 @@
 		private final Registry<Biome> biomeRegistry;
 		
 		private final AggregateLayer mountainLayer;
-		private final AggregateLayer plainLayer;
-		private final AggregateLayer hillLayer;
-		private final AggregateLayer oceanLayer;
-		
-		private final FastNoiseLite plainsNoise;
-		private final FastNoiseLite oakForestNoise;
-		private final FastNoiseLite birchForestNoise;
-		private final FastNoiseLite darkForestNoise;
 		
 		private final FastNoiseLite maskNoise;
 		
@@ -57,20 +42,9 @@
 			this.seed = seed;
 			this.biomeRegistry = biomeRegistry;
 			
-			this.mountainLayer = MountainAggregateLayer.create(seed);
-			this.plainLayer = PlainAggregateLayer.create(seed);
-			this.hillLayer = HillAggregateLayer.create(seed);
-			this.oceanLayer = OceanAggregateLayer.create(seed);
+			this.mountainLayer = Mountains.Aggregate.create(seed);
 			
-			this.plainsNoise = new FastNoiseLite((int) seed >> 2);
-			
-			this.oakForestNoise = new FastNoiseLite((int) seed << 2);
-			
-			this.birchForestNoise = new FastNoiseLite((int) seed >> 4);
-			
-			this.darkForestNoise = new FastNoiseLite((int) seed << 4);
-			
-			this.maskNoise = new FastNoiseLite((int) seed << 4);
+			this.maskNoise = new FastNoiseLite((int) seed);
 		}
 		
 		@Override
@@ -86,33 +60,11 @@
 		@Override
 		public Biome getBiomeForNoiseGen(int biomeX, int biomeY, int biomeZ) {
 			int mountainHeight = mountainLayer.getHeightLayer().getHeight(biomeX, biomeZ);
-			int plainHeight = plainLayer.getHeightLayer().getHeight(biomeX, biomeZ);
-			int hillHeight = hillLayer.getHeightLayer().getHeight(biomeX, biomeZ);
-			int oceanHeight = oceanLayer.getHeightLayer().getHeight(biomeX, biomeZ);
 			
-			if (mountainHeight > plainHeight && mountainHeight > hillHeight && mountainHeight > oceanHeight) {
-				return biomeRegistry.get(BiomeKeys.MOUNTAINS);
-			} else if (hillHeight > oceanHeight || plainHeight > oceanHeight) {
-				float distance = (float) (Math.sqrt(new BlockPos(biomeX, 0, biomeZ).getSquaredDistance(BlockPos.ZERO)));
-				
-				if (distance < 32.0F) {
-					return biomeRegistry.get(BiomeKeys.PLAINS);
-				} else {
-					float offsetBiomeX = biomeX + NoiseUtils.getNoise(maskNoise, biomeX, biomeZ, 8, 1.0F, 1.0F, 0.33F) * 32;
-					float offsetBiomeZ = biomeZ + NoiseUtils.getNoise(maskNoise, biomeX, biomeZ, 8, 1.0F, 1.0F, 0.33F) * 32;
-					
-					if (offsetBiomeX > 0 && offsetBiomeZ > 0) {
-						return biomeRegistry.get(BiomeKeys.DESERT);
-					} else if (offsetBiomeX > 0 && offsetBiomeZ < 0) {
-						return biomeRegistry.get(BiomeKeys.SAVANNA);
-					} else if (offsetBiomeX < 0 && offsetBiomeZ > 0) {
-						return biomeRegistry.get(BiomeKeys.JUNGLE);
-					} else {
-						return biomeRegistry.get(BiomeKeys.FOREST);
-					}
-				}
+			if (mountainHeight > 80) {
+				return biomeRegistry.get(BiomeKeys.SNOWY_MOUNTAINS);
 			} else {
-				return biomeRegistry.get(BiomeKeys.OCEAN);
+				return biomeRegistry.get(BiomeUtils.getSphereBiome(biomeX, biomeZ, maskNoise));
 			}
 		}
 		

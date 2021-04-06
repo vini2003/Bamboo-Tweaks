@@ -1,27 +1,30 @@
 package vini2003.xyz.eco.common.world.generator;
 
+import Auburn.FastNoiseLite.Java.FastNoiseLite;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.util.registry.RegistryLookupCodec;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.ChunkRegion;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeKeys;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.StructureAccessor;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.chunk.StructuresConfig;
 import net.minecraft.world.gen.chunk.VerticalBlockSample;
 import vini2003.xyz.eco.common.biome.EcoBiomeSource;
-import vini2003.xyz.eco.common.world.layer.base.AggregateLayer;
-import vini2003.xyz.eco.common.world.layer.implementation.hill.HillAggregateLayer;
-import vini2003.xyz.eco.common.world.layer.implementation.ocean.OceanAggregateLayer;
-import vini2003.xyz.eco.common.world.layer.implementation.plain.PlainAggregateLayer;
-import vini2003.xyz.eco.common.world.layer.implementation.mountain.MountainAggregateLayer;
+import vini2003.xyz.eco.common.util.BiomeUtils;
+import vini2003.xyz.eco.common.util.NoiseUtils;
+import vini2003.xyz.eco.common.world.biome.base.AggregateLayer;
+import vini2003.xyz.eco.common.world.biome.implementation.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,8 +44,15 @@ public class EcoChunkGenerator extends ChunkGenerator {
 	
 	private final long seed;
 	private final Registry<Biome> biomeRegistry;
-
-	private final List<AggregateLayer> aggregateLayers = new ArrayList<>();
+	
+	private final AggregateLayer mountains;
+	private final AggregateLayer ocean;
+	
+	private final AggregateLayer desert;
+	private final AggregateLayer forest;
+	private final AggregateLayer plain;
+	
+	private final FastNoiseLite maskNoise;
 	
 	public EcoChunkGenerator(long seed, Registry<Biome> biomeRegistry) {
 		super(new EcoBiomeSource(biomeRegistry, seed), new StructuresConfig(false));
@@ -50,10 +60,14 @@ public class EcoChunkGenerator extends ChunkGenerator {
 		this.seed = seed;
 		this.biomeRegistry = biomeRegistry;
 		
-		aggregateLayers.add(MountainAggregateLayer.create(seed));
-		aggregateLayers.add(PlainAggregateLayer.create(seed));
-		aggregateLayers.add(HillAggregateLayer.create(seed));
-		aggregateLayers.add(OceanAggregateLayer.create(seed));
+		this.mountains = Mountains.Aggregate.create(seed);
+		this.ocean = Ocean.Aggregate.create(seed);
+		
+		this.desert = Desert.Aggregate.create(seed);
+		this.forest = Forest.Aggregate.create(seed);
+		this.plain = Plain.Aggregate.create(seed);
+		
+		this.maskNoise = new FastNoiseLite((int) seed);
 	}
 	
 	@Override
@@ -68,17 +82,31 @@ public class EcoChunkGenerator extends ChunkGenerator {
 	
 	@Override
 	public void buildSurface(ChunkRegion region, Chunk chunk) {
-		aggregateLayers.forEach(it -> it.buildSurface(chunk));
+		for (int x = chunk.getPos().getStartX(); x <= chunk.getPos().getEndX(); ++x) {
+			for (int z = chunk.getPos().getStartZ(); z <= chunk.getPos().getEndZ(); ++z) {
+				mountains.buildSurface(chunk, x, z);
+				
+				forest.buildSurface(chunk, x, z);
+				
+				ocean.buildSurface(chunk, x, z);
+			}
+		}
 	}
 	
 	@Override
 	public void populateNoise(WorldAccess world, StructureAccessor accessor, Chunk chunk) {
-		aggregateLayers.forEach(it -> it.buildSubstrate(chunk));
+		for (int x = chunk.getPos().getStartX(); x <= chunk.getPos().getEndX(); ++x) {
+			for (int z = chunk.getPos().getStartZ(); z <= chunk.getPos().getEndZ(); ++z) {
+				mountains.buildSubstrate(chunk, x, z);
+				
+				forest.buildSubstrate(chunk, x, z);
+			}
+		}
 	}
 	
 	@Override
 	public int getHeight(int x, int z, Heightmap.Type heightmapType) {
-		return aggregateLayers.stream().map(it -> it.getHeightLayer().getHeight(x, z)).max(Integer::compareTo).orElse(0);
+		return 0;
 	}
 	
 	@Override
