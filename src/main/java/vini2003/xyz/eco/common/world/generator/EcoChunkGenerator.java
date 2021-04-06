@@ -18,6 +18,7 @@ import net.minecraft.world.gen.chunk.StructuresConfig;
 import net.minecraft.world.gen.chunk.VerticalBlockSample;
 import vini2003.xyz.eco.common.biome.EcoBiomeSource;
 import vini2003.xyz.eco.common.world.layer.base.AggregateLayer;
+import vini2003.xyz.eco.common.world.layer.implementation.hill.HillAggregateLayer;
 import vini2003.xyz.eco.common.world.layer.implementation.ocean.OceanAggregateLayer;
 import vini2003.xyz.eco.common.world.layer.implementation.plain.PlainAggregateLayer;
 import vini2003.xyz.eco.common.world.layer.implementation.mountain.MountainAggregateLayer;
@@ -51,6 +52,7 @@ public class EcoChunkGenerator extends ChunkGenerator {
 		
 		aggregateLayers.add(MountainAggregateLayer.create(seed));
 		aggregateLayers.add(PlainAggregateLayer.create(seed));
+		aggregateLayers.add(HillAggregateLayer.create(seed));
 		aggregateLayers.add(OceanAggregateLayer.create(seed));
 	}
 	

@@ -22,6 +22,6 @@ public class PlainHeightLayer extends HeightLayer {
 	 */
 	@Override
 	public int getHeight(int x, int z) {
-		return 64 + (int) (noiseLayer.getNoise(x, z) * 8.0F);
+		return 56 + (int) (noiseLayer.getNoise(x, z) * 16.0F);
 	}
 }

@@ -10,6 +10,8 @@ public class MountainHeightLayer extends HeightLayer {
 	
 	@Override
 	public int getHeight(int x, int z) {
+		if (true) return 0;
+		
 		return (int) (noiseLayer.getNoise(x, z)  * 192.0F + 48.0F);
 	}
 }

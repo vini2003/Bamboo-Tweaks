@@ -1,14 +1,21 @@
-package vini2003.xyz.eco.common.world.layer.implementation.plain;
+package vini2003.xyz.eco.common.world.layer.implementation.hill;
 
+import Auburn.FastNoiseLite.Java.FastNoiseLite;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.chunk.Chunk;
 import vini2003.xyz.eco.common.world.layer.base.HeightLayer;
 import vini2003.xyz.eco.common.world.layer.base.SurfaceLayer;
 
-public class PlainSurfaceLayer extends SurfaceLayer {
-	public PlainSurfaceLayer(HeightLayer heightLayer) {
+public class HillSurfaceLayer extends SurfaceLayer {
+	private final FastNoiseLite snowNoise;
+	private final FastNoiseLite grassNoise;
+	
+	public HillSurfaceLayer(HeightLayer heightLayer) {
 		super(heightLayer);
+		
+		this.snowNoise = new FastNoiseLite((int) heightLayer.getSeed());
+		this.grassNoise = new FastNoiseLite((int) heightLayer.getSeed());
 	}
 	
 	@Override

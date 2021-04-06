@@ -76,14 +76,10 @@
 			} else if (plainHeight > oceanHeight) {
 				float sample = plainNoise.GetNoise(biomeX / 32.0F, biomeZ / 32.0F);
 				
-				if (sample < -0.5F) {
+				if (sample < 0.0F) {
 					return biomeRegistry.get(BiomeKeys.PLAINS);
-				} else if (sample < 0.0F) {
-					return biomeRegistry.get(BiomeKeys.FOREST);
-				} else if (sample < 0.5F) {
-					return biomeRegistry.get(BiomeKeys.BIRCH_FOREST);
 				} else {
-					return biomeRegistry.get(BiomeKeys.JUNGLE);
+					return biomeRegistry.get(BiomeKeys.FOREST);
 				}
 			} else {
 				return biomeRegistry.get(BiomeKeys.OCEAN);
