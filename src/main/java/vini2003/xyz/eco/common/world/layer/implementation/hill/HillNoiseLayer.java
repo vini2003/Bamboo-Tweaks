@@ -20,6 +20,11 @@ public class HillNoiseLayer extends NoiseLayer {
 	
 	@Override
 	public float getNoise(int x, int z) {
-		return NoiseUtils.normalize(NoiseUtils.getNoise(hillNoise, x * 2.0F, z * 2.0F, 8));
+		float hillSample = NoiseUtils.getNoise(hillNoise, x, z, 8, 1.0F, 1.0F, 0.33F);
+		float fadeSample = NoiseUtils.getNoise(hillNoise, x * 0.5F, z * 0.5F, 8, 1.0F, 1.0F, 0.33F);
+		
+		hillSample *= NoiseUtils.normalize(fadeSample);
+		
+		return NoiseUtils.normalize(hillSample);
 	}
 }

@@ -13,13 +13,10 @@ public class NoiseUtils {
 		return NormalizeUtils.normalize(sample, -1.0F, 1.0F, 0.0F, 1.0F);
 	}
 	
-	public static float getNoise(FastNoiseLite noise, float x, float z, int octaves) {
+	public static float getNoise(FastNoiseLite noise, float x, float z, int octaves, float frequency, float amplitude, float persistence) {
 		float total = 0.0F;
 		
-		float frequency = 1.0F;
-		float amplitude = 1.0F;
 		float maximum = 0.0F;
-		float persistence = 0.33F;
 		
 		for (int i = 0; i < octaves; ++i) {
 			total += noise.GetNoise(x * frequency, z * frequency) * amplitude;

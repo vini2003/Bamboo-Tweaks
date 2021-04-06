@@ -7,15 +7,18 @@
 	import net.minecraft.util.registry.Registry;
 	import net.minecraft.util.registry.RegistryKey;
 	import net.minecraft.util.registry.RegistryLookupCodec;
-	import net.minecraft.world.World;
 	import net.minecraft.world.biome.Biome;
 	import net.minecraft.world.biome.BiomeKeys;
 	import net.minecraft.world.biome.source.BiomeSource;
-	import net.minecraft.world.gen.surfacebuilder.BadlandsSurfaceBuilder;
+	import vini2003.xyz.eco.common.util.NoiseUtils;
 	import vini2003.xyz.eco.common.world.layer.base.AggregateLayer;
+	import vini2003.xyz.eco.common.world.layer.implementation.hill.HillAggregateLayer;
 	import vini2003.xyz.eco.common.world.layer.implementation.mountain.MountainAggregateLayer;
 	import vini2003.xyz.eco.common.world.layer.implementation.ocean.OceanAggregateLayer;
 	import vini2003.xyz.eco.common.world.layer.implementation.plain.PlainAggregateLayer;
+	
+	import java.util.Arrays;
+	import java.util.Comparator;
 	
 	public class EcoBiomeSource extends BiomeSource {
 		public static final Codec<EcoBiomeSource> CODEC =
@@ -37,9 +40,15 @@
 		
 		private final AggregateLayer mountainLayer;
 		private final AggregateLayer plainLayer;
+		private final AggregateLayer hillLayer;
 		private final AggregateLayer oceanLayer;
 		
-		private final FastNoiseLite plainNoise;
+		private final FastNoiseLite plainsNoise;
+		private final FastNoiseLite oakForestNoise;
+		private final FastNoiseLite birchForestNoise;
+		private final FastNoiseLite darkForestNoise;
+		
+		private final FastNoiseLite maskNoise;
 		
 		public EcoBiomeSource(Registry<Biome> biomeRegistry, long seed) {
 			super(ImmutableList.of());
@@ -49,10 +58,18 @@
 			
 			this.mountainLayer = MountainAggregateLayer.create(seed);
 			this.plainLayer = PlainAggregateLayer.create(seed);
+			this.hillLayer = HillAggregateLayer.create(seed);
 			this.oceanLayer = OceanAggregateLayer.create(seed);
 			
-			this.plainNoise = new FastNoiseLite((int) seed);
-			this.plainNoise.SetFrequency(0.025F);
+			this.plainsNoise = new FastNoiseLite((int) seed >> 2);
+			
+			this.oakForestNoise = new FastNoiseLite((int) seed << 2);
+			
+			this.birchForestNoise = new FastNoiseLite((int) seed >> 4);
+			
+			this.darkForestNoise = new FastNoiseLite((int) seed << 4);
+			
+			this.maskNoise = new FastNoiseLite((int) seed << 4);
 		}
 		
 		@Override
@@ -69,18 +86,22 @@
 		public Biome getBiomeForNoiseGen(int biomeX, int biomeY, int biomeZ) {
 			int mountainHeight = mountainLayer.getHeightLayer().getHeight(biomeX, biomeZ);
 			int plainHeight = plainLayer.getHeightLayer().getHeight(biomeX, biomeZ);
+			int hillHeight = hillLayer.getHeightLayer().getHeight(biomeX, biomeZ);
 			int oceanHeight = oceanLayer.getHeightLayer().getHeight(biomeX, biomeZ);
 			
-			if (mountainHeight > plainHeight && mountainHeight > oceanHeight) {
+			if (mountainHeight > plainHeight && mountainHeight > hillHeight && mountainHeight > oceanHeight) {
 				return biomeRegistry.get(BiomeKeys.MOUNTAINS);
-			} else if (plainHeight > oceanHeight) {
-				float sample = plainNoise.GetNoise(biomeX / 32.0F, biomeZ / 32.0F);
+			} else if (hillHeight > oceanHeight || plainHeight > oceanHeight) {
+				float plainsSample = NoiseUtils.getNoise(plainsNoise, biomeX / 64.0F, biomeZ / 64.0F, 2, 1.0F, 1.0F, 0.33F) + maskNoise.GetNoise(biomeX, biomeZ);
+				float oakForestSample = NoiseUtils.getNoise(oakForestNoise, biomeX / 64.0F, biomeZ / 64.0F, 2, 1.0F, 1.0F, 0.33F) + maskNoise.GetNoise(biomeX, biomeZ);
+				float birchForestSample = NoiseUtils.getNoise(birchForestNoise, biomeX / 64.0F, biomeZ / 64.0F, 2, 1.0F, 1.0F, 0.33F) + maskNoise.GetNoise(biomeX, biomeZ);
+				float darkForestSample = NoiseUtils.getNoise(darkForestNoise, biomeX / 64.0F, biomeZ / 64.0F, 2, 1.0F, 1.0F, 0.33F) + maskNoise.GetNoise(biomeX, biomeZ);
 				
-				if (sample < 0.0F) {
-					return biomeRegistry.get(BiomeKeys.PLAINS);
-				} else {
-					return biomeRegistry.get(BiomeKeys.FOREST);
-				}
+				return Arrays.stream(new Float[] { plainsSample, oakForestSample, birchForestSample, darkForestSample }).max(Float::compareTo).map(it -> {
+					return it == plainsSample ? biomeRegistry.get(BiomeKeys.PLAINS) :
+							it == oakForestSample ? biomeRegistry.get(BiomeKeys.FOREST) :
+									it == birchForestSample ? biomeRegistry.get(BiomeKeys.BIRCH_FOREST) : biomeRegistry.get(BiomeKeys.DARK_FOREST);
+					}).orElse(biomeRegistry.get(BiomeKeys.THE_VOID));
 			} else {
 				return biomeRegistry.get(BiomeKeys.OCEAN);
 			}

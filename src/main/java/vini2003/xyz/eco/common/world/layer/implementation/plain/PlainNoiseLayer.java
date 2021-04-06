@@ -19,6 +19,6 @@
 		
 		@Override
 		public float getNoise(int x, int z) {
-			return NoiseUtils.normalize(NoiseUtils.getNoise(noise, x / 4F, z / 4F, 8));
+			return NoiseUtils.normalize(NoiseUtils.getNoise(noise, x, z, 8, 0.5F, 1.0F, 0.33F));
 		}
 	}
