@@ -20,8 +20,7 @@ import java.util.List;
 public class GeneratorTypeMixin {
 	@Shadow @Final protected static List<GeneratorType> VALUES;
 	
-	@Inject(at = @At("TAIL" +
-			""), method = "<clinit>")
+	@Inject(at = @At("TAIL"), method = "<clinit>")
 	private static void eco_cinit(CallbackInfo ci) {
 		VALUES.add(new EcoGeneratorType());
 	}

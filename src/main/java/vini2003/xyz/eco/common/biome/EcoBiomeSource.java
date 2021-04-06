@@ -4,6 +4,7 @@
 	import com.google.common.collect.ImmutableList;
 	import com.mojang.serialization.Codec;
 	import com.mojang.serialization.codecs.RecordCodecBuilder;
+	import net.minecraft.util.math.BlockPos;
 	import net.minecraft.util.registry.Registry;
 	import net.minecraft.util.registry.RegistryKey;
 	import net.minecraft.util.registry.RegistryLookupCodec;
@@ -92,16 +93,24 @@
 			if (mountainHeight > plainHeight && mountainHeight > hillHeight && mountainHeight > oceanHeight) {
 				return biomeRegistry.get(BiomeKeys.MOUNTAINS);
 			} else if (hillHeight > oceanHeight || plainHeight > oceanHeight) {
-				float plainsSample = NoiseUtils.getNoise(plainsNoise, biomeX / 64.0F, biomeZ / 64.0F, 2, 1.0F, 1.0F, 0.33F) + maskNoise.GetNoise(biomeX, biomeZ);
-				float oakForestSample = NoiseUtils.getNoise(oakForestNoise, biomeX / 64.0F, biomeZ / 64.0F, 2, 1.0F, 1.0F, 0.33F) + maskNoise.GetNoise(biomeX, biomeZ);
-				float birchForestSample = NoiseUtils.getNoise(birchForestNoise, biomeX / 64.0F, biomeZ / 64.0F, 2, 1.0F, 1.0F, 0.33F) + maskNoise.GetNoise(biomeX, biomeZ);
-				float darkForestSample = NoiseUtils.getNoise(darkForestNoise, biomeX / 64.0F, biomeZ / 64.0F, 2, 1.0F, 1.0F, 0.33F) + maskNoise.GetNoise(biomeX, biomeZ);
+				float distance = (float) (Math.sqrt(new BlockPos(biomeX, 0, biomeZ).getSquaredDistance(BlockPos.ZERO)));
 				
-				return Arrays.stream(new Float[] { plainsSample, oakForestSample, birchForestSample, darkForestSample }).max(Float::compareTo).map(it -> {
-					return it == plainsSample ? biomeRegistry.get(BiomeKeys.PLAINS) :
-							it == oakForestSample ? biomeRegistry.get(BiomeKeys.FOREST) :
-									it == birchForestSample ? biomeRegistry.get(BiomeKeys.BIRCH_FOREST) : biomeRegistry.get(BiomeKeys.DARK_FOREST);
-					}).orElse(biomeRegistry.get(BiomeKeys.THE_VOID));
+				if (distance < 32.0F) {
+					return biomeRegistry.get(BiomeKeys.PLAINS);
+				} else {
+					float offsetBiomeX = biomeX + NoiseUtils.getNoise(maskNoise, biomeX, biomeZ, 8, 1.0F, 1.0F, 0.33F) * 32;
+					float offsetBiomeZ = biomeZ + NoiseUtils.getNoise(maskNoise, biomeX, biomeZ, 8, 1.0F, 1.0F, 0.33F) * 32;
+					
+					if (offsetBiomeX > 0 && offsetBiomeZ > 0) {
+						return biomeRegistry.get(BiomeKeys.DESERT);
+					} else if (offsetBiomeX > 0 && offsetBiomeZ < 0) {
+						return biomeRegistry.get(BiomeKeys.SAVANNA);
+					} else if (offsetBiomeX < 0 && offsetBiomeZ > 0) {
+						return biomeRegistry.get(BiomeKeys.JUNGLE);
+					} else {
+						return biomeRegistry.get(BiomeKeys.FOREST);
+					}
+				}
 			} else {
 				return biomeRegistry.get(BiomeKeys.OCEAN);
 			}

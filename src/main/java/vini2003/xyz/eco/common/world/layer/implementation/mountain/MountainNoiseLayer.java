@@ -1,6 +1,8 @@
 package vini2003.xyz.eco.common.world.layer.implementation.mountain;
 
 import Auburn.FastNoiseLite.Java.FastNoiseLite;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3i;
 import vini2003.xyz.eco.common.util.NoiseUtils;
 import vini2003.xyz.eco.common.util.NormalizeUtils;
 import vini2003.xyz.eco.common.world.layer.base.NoiseLayer;
@@ -21,20 +23,10 @@ public class MountainNoiseLayer extends NoiseLayer {
 	
 	@Override
 	public float getNoise(int x, int z) {
-		int oX = (x % 1536);
-		int oZ = (z % 1536);
+		float distance = (float) (512.0F - Math.sqrt(new BlockPos(x, 0, z).getSquaredDistance(BlockPos.ZERO)));
 		
-		if (oX > 768) {
-			oX = 1536 - oX;
-		}
-		
-		if (oZ > 768) {
-			oZ = 1536 - oZ;
-		}
-
-		float distance = (float) Math.sqrt(oX * oX + oZ * oZ);
 		float result = NoiseUtils.normalize(NoiseUtils.getNoise(mountainNoise, x, z, 8, 1.0F, 1.0F, 0.33F));
 		
-		return (1.0F - (distance - 384.0F) / (64.0F + Math.abs(distance - 384.0F))) * 0.375F * result;
+		return (1.0F - (distance - 128.0F) / (64.0F + Math.abs(distance - 128.0F))) * 0.375F * result;
 	}
 }
