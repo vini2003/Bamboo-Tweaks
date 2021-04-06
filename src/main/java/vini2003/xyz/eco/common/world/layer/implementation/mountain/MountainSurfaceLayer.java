@@ -9,11 +9,13 @@ import vini2003.xyz.eco.common.world.layer.base.SurfaceLayer;
 
 public class MountainSurfaceLayer extends SurfaceLayer {
 	private final FastNoiseLite snowNoise;
+	private final FastNoiseLite grassNoise;
 	
 	public MountainSurfaceLayer(HeightLayer heightLayer) {
 		super(heightLayer);
 		
 		this.snowNoise = new FastNoiseLite((int) heightLayer.getSeed());
+		this.grassNoise = new FastNoiseLite((int) heightLayer.getSeed());
 	}
 	
 	@Override
@@ -22,7 +24,20 @@ public class MountainSurfaceLayer extends SurfaceLayer {
 			for (int z = chunk.getPos().getStartZ(); z <= chunk.getPos().getEndZ(); ++z) {
 				int height = heightLayer.getHeight(x, z);
 				
-				float snow = snowNoise.GetNoise(x, z);
+				float snow = snowNoise.GetNoise(x / 8F, z / 8F);
+				float grass = grassNoise.GetNoise(x, z / 8F / 8F);
+				
+				if (height < 80 + (8 * grass)) {
+					for (int y = height - 1; y > 80 + (8 * grass); --y) {
+						chunk.setBlockState(new BlockPos(x, y, z), Blocks.DIRT.getDefaultState(), false);
+					}
+					
+					if (height < 64) {
+						chunk.setBlockState(new BlockPos(x, height, z), Blocks.DIRT.getDefaultState(), false);
+					} else {
+						chunk.setBlockState(new BlockPos(x, height, z), Blocks.GRASS_BLOCK.getDefaultState(), false);
+					}
+				}
 				
 				if (height > 148 + (16 * snow)) {
 					for (int y = height - 1; y > 148 + (16 * snow); --y) {

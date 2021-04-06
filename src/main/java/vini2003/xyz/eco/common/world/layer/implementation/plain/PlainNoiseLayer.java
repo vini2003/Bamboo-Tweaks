@@ -19,7 +19,6 @@ public class PlainNoiseLayer extends NoiseLayer {
 	
 	@Override
 	public float getNoise(int x, int z) {
-		
-		return noise.GetNoise(x, z);
+		return noise.GetNoise(x / 4F, z / 4F);
 	}
 }
