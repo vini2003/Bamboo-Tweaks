@@ -1,0 +1,33 @@
+{
+	"schemaVersion": 1,
+	"id": "bambootweaks",
+	"version": "${version}",
+	"name": "Bamboo Tweaks",
+	"description": "Because bamboo needs some more uses.",
+	"authors": [
+		"vini2003"
+	],
+	"contact": {
+		"sources": "https://github.com/vini2003/BambooTweaks"
+	},
+	"license": "GPLv3",
+	"icon": "assets/bambootweaks/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"vini2003.xyz.bambootweaks.FabricBambooTweaks"
+		],
+		"client": [
+			"vini2003.xyz.bambootweaks.FabricBambooTweaksClient"
+		]
+	},
+	"mixins": [
+	],
+	"depends": {
+		"fabricloader": ">=0.7.0",
+		"fabric": "*"
+	},
+	"suggests": {
+		"flamingo": "*"
+	}
+}

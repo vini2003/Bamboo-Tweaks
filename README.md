@@ -6,6 +6,10 @@ Within 31 days, it will decay to an unsustainable level, allowing the outside wo
 
 Save the world. Save the shield. Save the ecosystem.
 
+Outer tundra, upon rocky cliffs.
+
+Inner tropical paradise.
+
 ## Details
 
 Outside, there is a wasteland version of each biome.

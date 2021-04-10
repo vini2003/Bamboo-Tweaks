@@ -1,0 +1,17 @@
+{
+	"type": "crafting_shaped",
+	"pattern": [
+		"B",
+		"B",
+		"B"
+	],
+	"key": {
+		"B": {
+			"item": "bambootweaks:dried_bamboo"
+		}
+	},
+	"result": {
+		"item": "bambootweaks:dried_bamboo_rod",
+		"count": 1
+	}
+}

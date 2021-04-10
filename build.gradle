@@ -1,107 +1,77 @@
+buildscript {
+    ext.kotlin_version = '1.5.0-M2'
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
 plugins {
-    id 'fabric-loom' version '0.5-SNAPSHOT'
-    id 'maven-publish'
+    id "architectury-plugin" version "3.0-SNAPSHOT"
+    id "forgified-fabric-loom" version "0.6-SNAPSHOT" apply false
+}
+apply plugin: 'kotlin'
+
+architectury {
+    minecraft = rootProject.minecraft_version
 }
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
+subprojects {
+    apply plugin: "forgified-fabric-loom"
 
-archivesBaseName = project.mod_name
-group = project.mod_group
-version = project.mod_version + "+" + project.minecraft_version
-
-loom {
-    accessWidener = file("src/main/resources/eco.accesswidener")
-}
-
-repositories {
-    maven {
-        name = "Hephaestus"
-        url = "https://hephaestus.dev/release"
+    loom {
+        silentMojangMappingsLicense()
     }
 
-    maven {
-        name = "JitPack"
-        url = "https://jitpack.io"
-    }
+    dependencies {
+        // Minecraft
+        minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
 
-    maven {
-        name = "shedaniel"
-        url = "https://maven.shedaniel.me/"
+        // Yarn
+        mappings "net.fabricmc:yarn:${rootProject.yarn_version}"
     }
 }
 
-dependencies {
-    // Minecraft
-    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+allprojects {
+    apply plugin: "java"
+    apply plugin: "architectury-plugin"
+    apply plugin: "maven-publish"
 
-    // Yarn
-    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+    archivesBaseName = rootProject.mod_name
+    version = rootProject.mod_version
+    group = rootProject.mod_group
 
-    // Fabric Loader
-    modImplementation "net.fabricmc:fabric-loader:${project.fabric_loader_version}"
+    repositories {
 
-    // Fabric API
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
-
-    // Myron
-    modImplementation "dev.monarkhes:myron:${project.myron_version}"
-
-    // Mod Menu
-    modImplementation "io.github.prospector:modmenu:${project.mod_menu_version}"
-
-    // Cloth Config
-    modApi("me.shedaniel.cloth:cloth-config:${project.cloth_config_version}:fabric") {
-        exclude(group: "net.fabricmc.fabric-api")
     }
 
-    // Cardinal Components API
-    modImplementation "com.github.OnyxStudios.Cardinal-Components-API:Cardinal-Components-API:${project.cardinal_components_api_version}"
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
 
-    // Cloth API
-    modApi "me.shedaniel.cloth.api:cloth-api:${project.cloth_api_version}"
-    include "me.shedaniel.cloth.api:cloth-api:${project.cloth_api_version}"
-}
-
-processResources {
-    inputs.property "version", project.version
-
-    from(sourceSets.main.resources.srcDirs) {
-        include "fabric.mod.json"
-        expand "version": project.version
-    }
-
-    from(sourceSets.main.resources.srcDirs) {
-        exclude "fabric.mod.json"
-    }
-}
-
-tasks.withType(JavaCompile) {
-    options.encoding = "UTF-8"
-}
-
-task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = "sources"
-    from sourceSets.main.allSource
-}
-
-jar {
-    from "LICENSE"
-}
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            artifact(remapJar) {
-                builtBy remapJar
-            }
-            artifact(sourcesJar) {
-                builtBy remapSourcesJar
-            }
+        def targetVersion = 8
+        if (JavaVersion.current().isJava9Compatible()) {
+            options.release = targetVersion
         }
     }
 
-    repositories {
-        mavenLocal()
+    java {
+        withSourcesJar()
+    }
+}
+repositories {
+    mavenCentral()
+}
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+}
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
 }

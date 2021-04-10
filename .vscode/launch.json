@@ -1,0 +1,61 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Minecraft Client (:fabric)",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/run",
+      "console": "internalConsole",
+      "stopOnEntry": false,
+      "mainClass": "me.shedaniel.architectury.transformer.TransformerRuntime",
+      "vmArgs": "-Dfabric.dli.config\u003dC:\\Users\\vini2003\\GitHub\\Java\\Eco\\fabric\\.gradle\\loom-cache\\launch.cfg -Dfabric.dli.env\u003dclient -Dfabric.dli.main\u003dnet.fabricmc.loader.launch.knot.KnotClient -Darchitectury.main.class\u003dC:\\Users\\vini2003\\GitHub\\Java\\Eco\\fabric\\.gradle\\architectury\\.main_class -Darchitectury.runtime.transformer\u003dC:\\Users\\vini2003\\GitHub\\Java\\Eco\\fabric\\.gradle\\architectury\\.transforms -Darchitectury.properties\u003dC:\\Users\\vini2003\\GitHub\\Java\\Eco\\fabric\\.gradle\\architectury\\.properties -Djdk.attach.allowAttachSelf\u003dtrue -javaagent:C:\\Users\\vini2003\\GitHub\\Java\\Eco\\.gradle\\architectury\\architectury-transformer-agent.jar",
+      "args": "",
+      "env": {},
+      "projectName": ":fabric"
+    },
+    {
+      "type": "java",
+      "name": "Minecraft Server (:fabric)",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/run",
+      "console": "internalConsole",
+      "stopOnEntry": false,
+      "mainClass": "me.shedaniel.architectury.transformer.TransformerRuntime",
+      "vmArgs": "-Dfabric.dli.config\u003dC:\\Users\\vini2003\\GitHub\\Java\\Eco\\fabric\\.gradle\\loom-cache\\launch.cfg -Dfabric.dli.env\u003dserver -Dfabric.dli.main\u003dnet.fabricmc.loader.launch.knot.KnotServer -Darchitectury.main.class\u003dC:\\Users\\vini2003\\GitHub\\Java\\Eco\\fabric\\.gradle\\architectury\\.main_class -Darchitectury.runtime.transformer\u003dC:\\Users\\vini2003\\GitHub\\Java\\Eco\\fabric\\.gradle\\architectury\\.transforms -Darchitectury.properties\u003dC:\\Users\\vini2003\\GitHub\\Java\\Eco\\fabric\\.gradle\\architectury\\.properties -Djdk.attach.allowAttachSelf\u003dtrue -javaagent:C:\\Users\\vini2003\\GitHub\\Java\\Eco\\.gradle\\architectury\\architectury-transformer-agent.jar",
+      "args": "nogui",
+      "env": {},
+      "projectName": ":fabric"
+    },
+    {
+      "type": "java",
+      "name": "Minecraft Client (:forge)",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/run",
+      "console": "internalConsole",
+      "stopOnEntry": false,
+      "mainClass": "me.shedaniel.architectury.transformer.TransformerRuntime",
+      "vmArgs": "-Dfabric.dli.config\u003dC:\\Users\\vini2003\\GitHub\\Java\\Eco\\forge\\.gradle\\loom-cache\\launch.cfg -Dfabric.dli.env\u003dclient -Dfabric.dli.main\u003dnet.minecraftforge.userdev.LaunchTesting -Darchitectury.main.class\u003dC:\\Users\\vini2003\\GitHub\\Java\\Eco\\forge\\.gradle\\architectury\\.main_class -Darchitectury.runtime.transformer\u003dC:\\Users\\vini2003\\GitHub\\Java\\Eco\\forge\\.gradle\\architectury\\.transforms -Darchitectury.properties\u003dC:\\Users\\vini2003\\GitHub\\Java\\Eco\\forge\\.gradle\\architectury\\.properties -Djdk.attach.allowAttachSelf\u003dtrue -javaagent:C:\\Users\\vini2003\\GitHub\\Java\\Eco\\.gradle\\architectury\\architectury-transformer-agent.jar",
+      "args": "",
+      "env": {
+        "MOD_CLASSES": "main_b1b44e0%%C:\\Users\\vini2003\\GitHub\\Java\\Eco\\forge\\build\\resources\\main;main_b1b44e0%%C:\\Users\\vini2003\\GitHub\\Java\\Eco\\forge\\build\\classes\\java\\main"
+      },
+      "projectName": ":forge"
+    },
+    {
+      "type": "java",
+      "name": "Minecraft Server (:forge)",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/run",
+      "console": "internalConsole",
+      "stopOnEntry": false,
+      "mainClass": "me.shedaniel.architectury.transformer.TransformerRuntime",
+      "vmArgs": "-Dfabric.dli.config\u003dC:\\Users\\vini2003\\GitHub\\Java\\Eco\\forge\\.gradle\\loom-cache\\launch.cfg -Dfabric.dli.env\u003dserver -Dfabric.dli.main\u003dnet.minecraftforge.userdev.LaunchTesting -Darchitectury.main.class\u003dC:\\Users\\vini2003\\GitHub\\Java\\Eco\\forge\\.gradle\\architectury\\.main_class -Darchitectury.runtime.transformer\u003dC:\\Users\\vini2003\\GitHub\\Java\\Eco\\forge\\.gradle\\architectury\\.transforms -Darchitectury.properties\u003dC:\\Users\\vini2003\\GitHub\\Java\\Eco\\forge\\.gradle\\architectury\\.properties -Djdk.attach.allowAttachSelf\u003dtrue -javaagent:C:\\Users\\vini2003\\GitHub\\Java\\Eco\\.gradle\\architectury\\architectury-transformer-agent.jar",
+      "args": "nogui",
+      "env": {
+        "MOD_CLASSES": "main_aae4ee6%%C:\\Users\\vini2003\\GitHub\\Java\\Eco\\forge\\build\\resources\\main;main_aae4ee6%%C:\\Users\\vini2003\\GitHub\\Java\\Eco\\forge\\build\\classes\\java\\main"
+      },
+      "projectName": ":forge"
+    }
+  ]
+}

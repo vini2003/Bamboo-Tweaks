@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smoking",
+  "ingredient": {
+    "item": "minecraft:bamboo"
+  },
+  "result": "bambootweaks:dried_bamboo",
+  "experience": 0,
+  "cookingtime": 25
+}
