@@ -7,14 +7,14 @@
 	],
 	"key": {
 		"L": {
-			"item": "bambootweaks:bamboo_block"
+			"item": "bambootweaks:dried_bamboo_block"
 		},
 		"B": {
-			"item": "minecraft:bamboo"
+			"item": "bambootweaks:dried_bamboo"
 		}
 	},
 	"result": {
-		"item": "bambootweaks:bamboo_spike",
+		"item": "bambootweaks:dried_bamboo_spikes",
 		"count": 1
 	}
 }

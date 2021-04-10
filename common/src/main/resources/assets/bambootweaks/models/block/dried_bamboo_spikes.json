@@ -105,8 +105,8 @@
 		}
 	},
 	"textures": {
-		"0": "bambootweaks:block/dried_bamboo_spike",
-		"particle": "bambootweaks:block/dried_bamboo_spike"
+		"0": "bambootweaks:block/dried_bamboo_spikes",
+		"particle": "bambootweaks:block/dried_bamboo_spikes"
 	},
 	"elements": [
 		{

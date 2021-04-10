@@ -85,7 +85,7 @@ object BambooTweaksBlocks {
 	)
 	
 	val BambooSpikes = register<Block>(
-		"bamboo_spikes", { 
+		"bamboo_spikes", {
 			BambooSpikesBlock(blockSettings(Material.SUPPORTED).breakInstantly().nonOpaque())
 		}, itemSettings()
 	)
@@ -155,7 +155,7 @@ object BambooTweaksBlocks {
 	)
 	
 	val DriedBambooSpikes = register<Block>(
-		"dried_bamboo_spikes", { 
+		"dried_bamboo_spikes", {
 			BambooSpikesBlock(
 			blockSettings(Material.SUPPORTED).breakInstantly().nonOpaque())
 		}, itemSettings()
