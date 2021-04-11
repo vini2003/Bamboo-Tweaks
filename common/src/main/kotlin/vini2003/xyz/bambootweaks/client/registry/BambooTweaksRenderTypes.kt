@@ -6,14 +6,14 @@ import vini2003.xyz.bambootweaks.common.registry.BambooTweaksBlocks
 
 object BambooTweaksRenderTypes {
 	fun init() {
-		RenderTypes.register(RenderLayer.getCutout(), BambooTweaksBlocks.BambooDoor.orNull!!)
-		RenderTypes.register(RenderLayer.getCutout(), BambooTweaksBlocks.BambooLadder.orNull!!)
-		RenderTypes.register(RenderLayer.getCutout(), BambooTweaksBlocks.BambooTorch.orNull!!)
-		RenderTypes.register(RenderLayer.getCutout(), BambooTweaksBlocks.BambooWallTorch.orNull!!)
+		RenderTypes.register(RenderLayer.getCutout(), BambooTweaksBlocks.BambooDoor.get())
+		RenderTypes.register(RenderLayer.getCutout(), BambooTweaksBlocks.BambooLadder.get())
+		RenderTypes.register(RenderLayer.getCutout(), BambooTweaksBlocks.BambooTorch.get())
+		RenderTypes.register(RenderLayer.getCutout(), BambooTweaksBlocks.BambooWallTorch.get())
 		
-		RenderTypes.register(RenderLayer.getCutout(), BambooTweaksBlocks.DriedBambooDoor.orNull!!)
-		RenderTypes.register(RenderLayer.getCutout(), BambooTweaksBlocks.DriedBambooLadder.orNull!!)
-		RenderTypes.register(RenderLayer.getCutout(), BambooTweaksBlocks.DriedBambooTorch.orNull!!)
-		RenderTypes.register(RenderLayer.getCutout(), BambooTweaksBlocks.DriedBambooWallTorch.orNull!!)
+		RenderTypes.register(RenderLayer.getCutout(), BambooTweaksBlocks.DryBambooDoor.get())
+		RenderTypes.register(RenderLayer.getCutout(), BambooTweaksBlocks.DryBambooLadder.get())
+		RenderTypes.register(RenderLayer.getCutout(), BambooTweaksBlocks.DryBambooTorch.get())
+		RenderTypes.register(RenderLayer.getCutout(), BambooTweaksBlocks.DryBambooWallTorch.get())
 	}
 }

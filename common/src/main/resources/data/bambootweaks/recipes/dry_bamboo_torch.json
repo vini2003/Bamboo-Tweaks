@@ -1,0 +1,19 @@
+{
+	"type": "crafting_shaped",
+	"pattern": [
+		"C",
+		"B"
+	],
+	"key": {
+		"C": {
+			"item": "minecraft:coal"
+		},
+		"B": {
+			"item": "bambootweaks:dry_bamboo"
+		}
+	},
+	"result": {
+		"item": "bambootweaks:dry_bamboo_torch",
+		"count": 4
+	}
+}

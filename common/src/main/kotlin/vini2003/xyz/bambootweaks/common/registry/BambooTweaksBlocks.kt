@@ -12,169 +12,116 @@ import vini2003.xyz.bambootweaks.CommonBambooTweaks
 import vini2003.xyz.bambootweaks.common.block.*
 
 object BambooTweaksBlocks {
-	val BlockRegistry = DeferredRegister.create(CommonBambooTweaks.Id, Registry.BLOCK_KEY)
+	private val Blocks = BambooTweaksDeferredRegisters.Blocks
+	private val Items = BambooTweaksDeferredRegisters.Items
 	
 	fun init() {
-		BlockRegistry.register()
+
 	}
 	
-	fun <T : Block> register(name: String, blockSupplier: () -> T, settings: Item.Settings): RegistrySupplier<T> {
-		return register(name, blockSupplier, true) {
-			BlockItem(blockSupplier.invoke(), settings)
+	fun <T : Block> register(name: String, supplier: () -> T): RegistrySupplier<T> {
+		return Blocks.register(name, supplier)
+	}
+	
+	fun <T : Block> register(name: String, supplier: () -> T, settings: (Item.Settings) -> (Item.Settings)): RegistrySupplier<T> {
+		Blocks.register(name, supplier).let { block ->
+			Items.register(name) {
+				BlockItem(block.get(), settings.invoke(itemSettings()))
+			}
+			
+			return block
 		}
-	}
-	
-	fun <T : Block> register(name: String, blockSupplier: () -> T): RegistrySupplier<T> {
-		return register(name, blockSupplier, false) { null }
-	}
-	
-	fun <T : Block> register(name: String, blockSupplier: () -> T, hasItem: Boolean, itemSupplier: () -> BlockItem?): RegistrySupplier<T> {
-		val b = BlockRegistry.register(CommonBambooTweaks.identifier(name), blockSupplier)
-		
-		if (hasItem) {
-			BambooTweaksItems.register(name) { itemSupplier.invoke() as Item }
-		}
-		
-		return b
 	}
 	
 	private fun blockSettings(material: Material) = AbstractBlock.Settings.of(material)!!
 	
 	private fun itemSettings() = Item.Settings().group(BambooTweaksItemGroups.BambooTweaks)!!
 	
-	val Bamboo = register(
-		"bamboo_block", {
-			Block(blockSettings(Material.BAMBOO).strength(2.0F, 3.0F))
-		}, itemSettings()
-	)
+	val Bamboo = register("bamboo_block", {
+		Block(blockSettings(Material.BAMBOO).strength(2.0F, 3.0F))
+	}, { it })
 	
-	val BambooDoor = register(
-		"bamboo_door", {
-			ExposedDoorBlock(blockSettings(Material.BAMBOO).strength(3.0F).nonOpaque())
-		}, itemSettings()
-	)
+	val BambooDoor = register("bamboo_door", {
+		ExposedDoorBlock(blockSettings(Material.BAMBOO).strength(3.0F).nonOpaque())
+	}, { it })
 	
-	val BambooFence = register(
-		"bamboo_fence", {
-			FenceBlock(blockSettings(Material.BAMBOO).strength(2.0F, 3.0F))
-		}, itemSettings()
-	)
+	val BambooFence = register("bamboo_fence", {
+		FenceBlock(blockSettings(Material.BAMBOO).strength(2.0F, 3.0F))
+	}, { it })
 	
-	val BambooFenceGate = register(
-		"bamboo_fence_gate", {
-			FenceGateBlock(blockSettings(Material.BAMBOO).strength(2.0F, 3.0F))
-		}, itemSettings()
-	)
+	val BambooFenceGate = register("bamboo_fence_gate", {
+		FenceGateBlock(blockSettings(Material.BAMBOO).strength(2.0F, 3.0F))
+	}, { it })
 	
-	val BambooWall = register<Block>(
-		"bamboo_wall", {
-			BambooWallBlock(blockSettings(Material.BAMBOO).strength(2.0F, 3.0F))
-		}, itemSettings()
-	)
+	val BambooWall = register("bamboo_wall", {
+		BambooWallBlock(blockSettings(Material.BAMBOO).strength(2.0F, 3.0F))
+	}, { it })
 	
-	val BambooLadder = register<Block>(
-		"bamboo_ladder", { 
-			ExposedLadderBlock(blockSettings(Material.BAMBOO).sounds(BlockSoundGroup.LADDER).strength(0.4F).nonOpaque())
-		}, itemSettings()
-	)
+	val BambooLadder = register("bamboo_ladder", {
+		ExposedLadderBlock(blockSettings(Material.BAMBOO).sounds(BlockSoundGroup.LADDER).strength(0.4F).nonOpaque())
+	}, { it })
 	
-	val BambooRod = register<Block>(
-		"bamboo_rod", { 
-			BambooRodBlock(blockSettings(Material.SUPPORTED).breakInstantly().nonOpaque())
-		}, itemSettings()
-	)
+	val BambooRod = register("bamboo_rod", {
+		BambooRodBlock(blockSettings(Material.SUPPORTED).breakInstantly().nonOpaque())
+	}, { it })
 	
-	val BambooSpikes = register<Block>(
-		"bamboo_spikes", {
-			BambooSpikesBlock(blockSettings(Material.SUPPORTED).breakInstantly().nonOpaque())
-		}, itemSettings()
-	)
+	val BambooSpikes = register("bamboo_spikes", {
+		BambooSpikesBlock(blockSettings(Material.SUPPORTED).breakInstantly().nonOpaque())
+	}, { it })
 	
-	val BambooStairs = register<Block>(
-		"bamboo_stairs", { 
-			ExposedStairsBlock(Bamboo.orNull!!.defaultState, blockSettings(Material.BAMBOO).strength(2.0F, 3.0F))
-		}, itemSettings()
-	)
+	val BambooStairs = register("bamboo_stairs", {
+		ExposedStairsBlock(Bamboo.orNull!!.defaultState, blockSettings(Material.BAMBOO).strength(2.0F, 3.0F))
+	}, { it })
 	
-	val BambooTorch = register<Block>(
-		"bamboo_torch") {
-			ExposedTorchBlock(blockSettings(Material.SUPPORTED).noCollision().breakInstantly().luminance { 14 }.noCollision(), ParticleTypes.FLAME)
-		}
+	val BambooTorch = register("bamboo_torch") {
+		ExposedTorchBlock(blockSettings(Material.SUPPORTED).noCollision().breakInstantly().luminance { 14 }.noCollision(), ParticleTypes.FLAME)
+	}
 	
-	val BambooWallTorch = register<Block>(
-		"bamboo_wall_torch") {
-			ExposedWallTorchBlock(blockSettings(Material.SUPPORTED).noCollision().breakInstantly().luminance { 14 }.noCollision(), ParticleTypes.FLAME)
-		}
+	val BambooWallTorch = register("bamboo_wall_torch") {
+		ExposedWallTorchBlock(blockSettings(Material.SUPPORTED).noCollision().breakInstantly().luminance { 14 }.noCollision(), ParticleTypes.FLAME)
+	}
 	
-	val DriedBamboo = register(
-		"dried_bamboo_block", { 
-			Block(blockSettings(Material.BAMBOO).strength(2.0F, 3.0F))
-		}, itemSettings()
-	)
+	val DryBamboo = register("dry_bamboo_block", {
+		Block(blockSettings(Material.BAMBOO).strength(2.0F, 3.0F))
+	}, { it })
 	
-	val DriedBambooDoor = register(
-		"dried_bamboo_door", { 
-			ExposedDoorBlock(
-			blockSettings(Material.BAMBOO).strength(3.0F).nonOpaque())
-		}, itemSettings()
-	)
+	val DryBambooDoor = register("dry_bamboo_door", {
+		ExposedDoorBlock(blockSettings(Material.BAMBOO).strength(3.0F).nonOpaque())
+	}, { it })
 	
-	val DriedBambooFence = register(
-		"dried_bamboo_fence", { 
-			FenceBlock(
-			blockSettings(Material.BAMBOO).strength(2.0F, 3.0F))
-		}, itemSettings()
-	)
+	val DryBambooFence = register("dry_bamboo_fence", {
+		FenceBlock(blockSettings(Material.BAMBOO).strength(2.0F, 3.0F))
+	}, { it })
 	
-	val DriedBambooFenceGate = register(
-		"dried_bamboo_fence_gate", { 
-			FenceGateBlock(
-			blockSettings(Material.BAMBOO).strength(2.0F, 3.0F))
-		}, itemSettings()
-	)
+	val DryBambooFenceGate = register("dry_bamboo_fence_gate", {
+		FenceGateBlock(blockSettings(Material.BAMBOO).strength(2.0F, 3.0F))
+	}, { it })
 	
-	val DriedBambooWall = register<Block>(
-		"dried_bamboo_wall", { 
-			BambooWallBlock(
-			blockSettings(Material.BAMBOO).strength(2.0F, 3.0F))
-		}, itemSettings()
-	)
+	val DryBambooWall = register("dry_bamboo_wall", {
+		BambooWallBlock(blockSettings(Material.BAMBOO).strength(2.0F, 3.0F))
+	}, { it })
 	
-	val DriedBambooLadder = register<Block>(
-		"dried_bamboo_ladder", { 
-			ExposedLadderBlock(
-			blockSettings(Material.BAMBOO).sounds(BlockSoundGroup.LADDER).strength(0.4F).nonOpaque())
-		}, itemSettings()
-	)
+	val DryBambooLadder = register("dry_bamboo_ladder", {
+		ExposedLadderBlock(blockSettings(Material.BAMBOO).sounds(BlockSoundGroup.LADDER).strength(0.4F).nonOpaque())
+	}, { it })
 	
-	val DriedBambooRod = register<Block>(
-		"dried_bamboo_rod", { 
-			BambooRodBlock(
-			blockSettings(Material.SUPPORTED).breakInstantly().nonOpaque())
-		}, itemSettings()
-	)
+	val DryBambooRod = register("dry_bamboo_rod", {
+		BambooRodBlock(blockSettings(Material.SUPPORTED).breakInstantly().nonOpaque())
+	}, { it })
 	
-	val DriedBambooSpikes = register<Block>(
-		"dried_bamboo_spikes", {
-			BambooSpikesBlock(
-			blockSettings(Material.SUPPORTED).breakInstantly().nonOpaque())
-		}, itemSettings()
-	)
+	val DryBambooSpikes = register("dry_bamboo_spikes", {
+		BambooSpikesBlock(blockSettings(Material.SUPPORTED).breakInstantly().nonOpaque())
+	}, { it })
 	
-	val DriedBambooStairs = register<Block>(
-		"dried_bamboo_stairs", { 
-			ExposedStairsBlock(
-			DriedBamboo.orNull!!.defaultState, blockSettings(Material.BAMBOO).strength(2.0F, 3.0F))
-		}, itemSettings()
-	)
+	val DryBambooStairs = register("dry_bamboo_stairs", {
+		ExposedStairsBlock(DryBamboo.orNull!!.defaultState, blockSettings(Material.BAMBOO).strength(2.0F, 3.0F))
+	}, { it })
 	
-	val DriedBambooTorch = register<Block>(
-		"dried_bamboo_torch") {
-			ExposedTorchBlock(blockSettings(Material.SUPPORTED).noCollision().breakInstantly().luminance { 14 }.noCollision(), ParticleTypes.FLAME)
-		}
+	val DryBambooTorch = register("dry_bamboo_torch") {
+		ExposedTorchBlock(blockSettings(Material.SUPPORTED).noCollision().breakInstantly().luminance { 14 }.noCollision(), ParticleTypes.FLAME)
+	}
 	
-	val DriedBambooWallTorch = register<Block>(
-		"dried_bamboo_wall_torch") {
-			ExposedWallTorchBlock(blockSettings(Material.SUPPORTED).noCollision().breakInstantly().luminance { 14 }.noCollision(), ParticleTypes.FLAME)
-		}
+	val DryBambooWallTorch = register("dry_bamboo_wall_torch") {
+		ExposedWallTorchBlock(blockSettings(Material.SUPPORTED).noCollision().breakInstantly().luminance { 14 }.noCollision(), ParticleTypes.FLAME)
+	}
 }

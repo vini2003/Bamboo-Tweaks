@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "minecraft:bamboo"
+  },
+  "result": "bambootweaks:dry_bamboo",
+  "experience": 0,
+  "cookingtime": 50
+}

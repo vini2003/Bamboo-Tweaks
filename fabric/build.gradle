@@ -40,23 +40,8 @@ dependencies {
     // Architectury
     modApi "me.shedaniel:architectury-fabric:${rootProject.architectury_version}"
 
-    // Myron
-    modImplementation "dev.monarkhes:myron:${project.myron_version}"
-
     // Mod Menu
     modImplementation "io.github.prospector:modmenu:${project.mod_menu_version}"
-
-    // Cloth Config
-    modApi("me.shedaniel.cloth:cloth-config:${project.cloth_config_version}:fabric") {
-        exclude(group: "net.fabricmc.fabric-api")
-    }
-
-    // Cardinal Components API
-    modImplementation "com.github.OnyxStudios.Cardinal-Components-API:Cardinal-Components-API:${project.cardinal_components_api_version}"
-
-    // Cloth API
-    modApi "me.shedaniel.cloth.api:cloth-api:${project.cloth_api_version}"
-    include "me.shedaniel.cloth.api:cloth-api:${project.cloth_api_version}"
 
     // Kotlin Standard Library
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$rootProject.kotlin_version"

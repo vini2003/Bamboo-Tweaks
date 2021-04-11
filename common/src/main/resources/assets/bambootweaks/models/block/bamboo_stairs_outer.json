@@ -1,5 +1,6 @@
 {
 	"credit": "Made with Blockbench",
+	"parent": "block/block",
 	"textures": {
 		"0": "bambootweaks:block/bamboo_stairs_inner",
 		"particle": "bambootweaks:block/bamboo_stairs_inner"

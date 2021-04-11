@@ -1,7 +1,0 @@
-{
-	"parent": "block/door_top_rh",
-	"textures": {
-		"bottom": "bambootweaks:block/dried_bamboo_door_bottom",
-		"top": "bambootweaks:block/dried_bamboo_door_top"
-	}
-}

@@ -8,38 +8,35 @@ import net.minecraft.util.registry.Registry
 import vini2003.xyz.bambootweaks.CommonBambooTweaks
 
 object BambooTweaksItems {
-	val ItemRegistry = DeferredRegister.create(CommonBambooTweaks.Id, Registry.ITEM_KEY)
+	private val Items = BambooTweaksDeferredRegisters.Items
 	
 	fun init() {
-		ItemRegistry.register()
+	
 	}
 	
-	fun <T : Item> register(name: String, itemSupplier: () -> T): RegistrySupplier<T> {
-		return ItemRegistry.register(CommonBambooTweaks.identifier(name), itemSupplier)
+	fun <T : Item> register(name: String, supplier: () -> T): RegistrySupplier<T> {
+		return Items.register(CommonBambooTweaks.identifier(name), supplier)
 	}
 	
 	private fun itemSettings() = Item.Settings().group(BambooTweaksItemGroups.BambooTweaks)!!
 	
-	val BambooTorch = register(
-		"bamboo_torch") {
+	val BambooTorch = register("bamboo_torch") {
 		WallStandingBlockItem(
-			BambooTweaksBlocks.BambooTorch.orNull!!,
-			BambooTweaksBlocks.BambooWallTorch.orNull!!,
+			BambooTweaksBlocks.BambooTorch.get(),
+			BambooTweaksBlocks.BambooWallTorch.get(),
 			itemSettings()
 		)
 	}
 	
-	val DriedBambooTorch = register(
-		"dried_bamboo_torch") {
+	val DryBambooTorch = register("dry_bamboo_torch") {
 		WallStandingBlockItem(
-			BambooTweaksBlocks.DriedBambooTorch.orNull!!,
-			BambooTweaksBlocks.DriedBambooWallTorch.orNull!!,
+			BambooTweaksBlocks.DryBambooTorch.get(),
+			BambooTweaksBlocks.DryBambooWallTorch.get(),
 			itemSettings()
 		)
 	}
 	
-	val DriedBamboo = register(
-		"dried_bamboo") {
+	val DryBamboo = register("dry_bamboo") {
 		Item(itemSettings())
 	}
 }

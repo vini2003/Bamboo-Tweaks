@@ -16,6 +16,13 @@ loom {
     useFabricMixin = true
 }
 
+repositories {
+    maven {
+        name = "Kotlin for Forge"
+        url = "https://thedarkcolour.github.io/KotlinForForge/"
+    }
+}
+
 dependencies {
     // Forge
     forge "net.minecraftforge:forge:${rootProject.minecraft_version}-${rootProject.forge_version}"
@@ -24,7 +31,10 @@ dependencies {
     modApi "me.shedaniel:architectury-forge:${rootProject.architectury_version}"
 
     // Kotlin Standard Library
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$rootProject.kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:${rootProject.kotlin_version}"
+
+    // Kotlin for Forge
+    implementation "thedarkcolour:kotlinforforge:${rootProject.kotlin_for_forge_version}"
 
     implementation(project(path: ":common")) {
         transitive = false

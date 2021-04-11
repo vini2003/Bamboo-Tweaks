@@ -25,7 +25,9 @@
 	],
 	"depends": {
 		"fabricloader": ">=0.7.0",
-		"fabric": "*"
+		"fabric": "*",
+		"architectury": ">=1.8.131",
+		"fabric-language-kotlin": ">=1.5.0+kotlin.1.4.31"
 	},
 	"suggests": {
 		"flamingo": "*"

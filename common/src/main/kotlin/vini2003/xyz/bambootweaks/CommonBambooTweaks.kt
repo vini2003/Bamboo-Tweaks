@@ -2,6 +2,7 @@ package vini2003.xyz.bambootweaks
 
 import net.minecraft.util.Identifier
 import vini2003.xyz.bambootweaks.common.registry.BambooTweaksBlocks
+import vini2003.xyz.bambootweaks.common.registry.BambooTweaksDeferredRegisters
 import vini2003.xyz.bambootweaks.common.registry.BambooTweaksItemGroups
 import vini2003.xyz.bambootweaks.common.registry.BambooTweaksItems
 
@@ -16,6 +17,7 @@ object CommonBambooTweaks {
 		BambooTweaksBlocks.init()
 		BambooTweaksItems.init()
 		BambooTweaksItemGroups.init()
+		BambooTweaksDeferredRegisters.init()
 	}
 }
 

@@ -1,0 +1,19 @@
+{
+	"type": "crafting_shaped",
+	"pattern": [
+		"BLB",
+		"BLB"
+	],
+	"key": {
+		"L": {
+			"item": "bambootweaks:dry_bamboo_block"
+		},
+		"B": {
+			"item": "bambootweaks:dry_bamboo"
+		}
+	},
+	"result": {
+		"item": "bambootweaks:dry_bamboo_fence_gate",
+		"count": 1
+	}
+}

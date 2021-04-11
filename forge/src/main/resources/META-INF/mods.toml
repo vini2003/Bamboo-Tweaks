@@ -1,5 +1,5 @@
-modLoader = "javafml"
-loaderVersion = "[35,)"
+modLoader = "kotlinforforge"
+loaderVersion = "[1.11,)"
 #issueTrackerURL = ""
 license = "MIT"
 
@@ -16,7 +16,7 @@ Because bamboo needs some more uses.
 [[dependencies.bambootweaks]]
 modId = "forge"
 mandatory = true
-versionRange = "[35,)"
+versionRange = "[36,)"
 ordering = "NONE"
 side = "BOTH"
 
@@ -30,6 +30,6 @@ side = "BOTH"
 [[dependencies.bambootweaks]]
 modId = "architectury"
 mandatory = true
-versionRange = "[1.1.55,)"
+versionRange = "[1.8.131,)"
 ordering = "AFTER"
 side = "BOTH"
