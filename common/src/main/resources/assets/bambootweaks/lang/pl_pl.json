@@ -1,0 +1,30 @@
+{
+	"block.bambootweaks.bamboo_block": "Blok bambusa",
+	"block.bambootweaks.bamboo_fence_gate": "Bambusowa furtka",
+	"block.bambootweaks.bamboo_wall": "Bambusowy murek",
+	"block.bambootweaks.bamboo_fence": "Bambusowy płot",
+	"block.bambootweaks.bamboo_ladder": "Bambusowa drabina",
+	"block.bambootweaks.bamboo_rod": "Bambusowy słupek",
+	"block.bambootweaks.bamboo_spike": "Bambusowe kolce",
+	"block.bambootweaks.bamboo_torch": "Bambusowa pochodnia",
+	"block.bambootweaks.bamboo_stairs": "Bambusowe schody",
+	"block.bambootweaks.bamboo_door": "Bambusowe drzwi",
+	"item.bambootweaks.dried_bamboo": "Suszony bambus",
+	"block.bambootweaks.dried_bamboo_block": "Blok szuszonego bambusa",
+	"block.bambootweaks.dried_bamboo_fence_gate": "Suszona bambusowa furtka",
+	"block.bambootweaks.dried_bamboo_wall": "Suszony bambusowy murek",
+	"block.bambootweaks.dried_bamboo_fence": "Suszony bambusowy płot",
+	"block.bambootweaks.dried_bamboo_ladder": "Suszona bambusowa drabina",
+	"block.bambootweaks.dried_bamboo_rod": "Suszony bambusowy słupek",
+	"block.bambootweaks.dried_bamboo_spike": "Suszone bambusowe kolce",
+	"block.bambootweaks.dried_bamboo_torch": "Suszona bambusowa pochodnia",
+	"block.bambootweaks.dried_bamboo_stairs": "Suszone bambusowe schody",
+	"block.bambootweaks.dried_bamboo_door": "Suszone bambusowe drzwi",
+	"itemGroup.bambootweaks.bambootweaks": "Bamboo Tweaks",
+	
+	
+	"block.bambootweaks.bamboo_trapdoor": "Bambusowa klapa",
+	"block.bambootweaks.bamboo_slab": "Bambusowa płyta",
+	"block.bambootweaks.bamboo_dried_trapdoor": "Suszona bambusowa klapa",
+	"block.bambootweaks.bamboo_dried_slab": "Suszona bambusowa płyta"
+}
