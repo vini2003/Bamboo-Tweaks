@@ -1,1 +1,3 @@
-# Bamboo stuffs.
+# Bamboo Tweaks
+
+Adds new Bamboo blocks.
