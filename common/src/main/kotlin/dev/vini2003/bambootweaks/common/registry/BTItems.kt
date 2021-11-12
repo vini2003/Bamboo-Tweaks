@@ -18,13 +18,13 @@ object BTItems {
 	
 	private fun itemSettings() = Item.Settings().group(BTItemGroups.BambooTweaks)!!
 	
-	// val BambooTorch = register("bamboo_torch") {
-	// 	WallStandingBlockItem(BTBlocks.BambooTorch.get(), BTBlocks.BambooWallTorch.get(), itemSettings())
-	// }
-	//
-	// val DryBambooTorch = register("dry_bamboo_torch") {
-	// 	WallStandingBlockItem(BTBlocks.DryBambooTorch.get(), BTBlocks.DryBambooWallTorch.get(), itemSettings())
-	// }
+	val BambooTorch = register("bamboo_torch") {
+		WallStandingBlockItem(BTBlocks.BambooTorch.get(), BTBlocks.BambooWallTorch.get(), itemSettings())
+	}
+	
+	val DryBambooTorch = register("dry_bamboo_torch") {
+		WallStandingBlockItem(BTBlocks.DryBambooTorch.get(), BTBlocks.DryBambooWallTorch.get(), itemSettings())
+	}
 	
 	val DryBamboo = register("dry_bamboo") {
 		Item(itemSettings())

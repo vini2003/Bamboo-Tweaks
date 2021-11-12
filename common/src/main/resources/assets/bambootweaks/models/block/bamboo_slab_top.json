@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "bambootweaks:block/bamboo_block_bottom",
+    "top": "bambootweaks:block/bamboo_block_top",
+    "side": "bambootweaks:block/bamboo_block_side"
+  }
+}

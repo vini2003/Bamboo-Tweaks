@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "bambootweaks:block/bamboo_slab"
+    },
+    "type=double": {
+      "model": "bambootweaks:block/bamboo_block"
+    },
+    "type=top": {
+      "model": "bambootweaks:block/bamboo_slab_top"
+    }
+  }
+}

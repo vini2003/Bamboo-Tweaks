@@ -13,4 +13,4 @@ class ExposedTorchBlock(settings: Settings, effect: ParticleEffect) : TorchBlock
 
 class ExposedWallTorchBlock(settings: Settings, effect: ParticleEffect) : WallTorchBlock(settings, effect)
 
-
+class ExposedTrapdoorBlock(settings: AbstractBlock.Settings) : TrapdoorBlock(settings)
