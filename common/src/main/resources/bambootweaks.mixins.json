@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "dev.vini2003.bambootweaks.mixin",
+  "compatibilityLevel": "JAVA_16",
+  "mixins": [
+    "common.LivingEntityMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -1,10 +1,7 @@
 package dev.vini2003.bambootweaks
 
+import dev.vini2003.bambootweaks.common.registry.*
 import net.minecraft.util.Identifier
-import dev.vini2003.bambootweaks.common.registry.BTBlocks
-import dev.vini2003.bambootweaks.common.registry.BTRegistries
-import dev.vini2003.bambootweaks.common.registry.BTItemGroups
-import dev.vini2003.bambootweaks.common.registry.BTItems
 
 object CBT {
 	const val Id = "bambootweaks"
@@ -18,6 +15,8 @@ object CBT {
 		BTItems.init()
 		BTItemGroups.init()
 		BTRegistries.init()
+		
+		BTFuels.init()
 	}
 }
 
