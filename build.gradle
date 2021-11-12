@@ -1,19 +1,8 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-    }
-}
-
 plugins {
     id "architectury-plugin" version "3.4-SNAPSHOT"
     id "dev.architectury.loom" version "0.10.0-SNAPSHOT" apply false
+    id "org.jetbrains.kotlin.jvm"
 }
-
-apply plugin: 'kotlin'
 
 architectury {
     minecraft = rootProject.minecraftVersion
@@ -45,6 +34,7 @@ allprojects {
     group = rootProject.projectGroup
 
     repositories {
+        // Maven Central
         mavenCentral()
     }
 

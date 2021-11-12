@@ -1,6 +1,6 @@
 plugins {
     id "com.github.johnrengelman.shadow" version "7.0.0"
-    id 'org.jetbrains.kotlin.jvm'
+    id "org.jetbrains.kotlin.jvm"
 }
 
 architectury {
@@ -18,12 +18,6 @@ configurations {
 }
 
 repositories {
-    // Hephaestus
-    maven {
-        name = "Hephaestus"
-        url = "https://hephaestus.dev/release"
-    }
-
     // TerraformersMC
     maven {
         name = "TerraformersMC"
@@ -35,8 +29,6 @@ repositories {
         name = "shedaniel"
         url = "https://maven.shedaniel.me/"
     }
-
-    mavenCentral()
 }
 
 dependencies {
@@ -51,9 +43,6 @@ dependencies {
 
     // Mod Menu
     modImplementation "com.terraformersmc:modmenu:${project.modMenuVersion}"
-
-    // Kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$rootProject.kotlinVersion"
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
@@ -76,15 +65,12 @@ processResources {
 
 shadowJar {
     configurations = [project.configurations.shadowCommon]
-
     classifier "dev-shadow"
 }
 
 remapJar {
     input.set shadowJar.archiveFile
-
     dependsOn shadowJar
-
     classifier null
 }
 
@@ -94,9 +80,7 @@ jar {
 
 sourcesJar {
     def commonSources = project(":common").sourcesJar
-
     dependsOn commonSources
-
     from commonSources.archiveFile.map { zipTree(it) }
 }
 

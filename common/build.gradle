@@ -1,5 +1,5 @@
 plugins {
-    id 'org.jetbrains.kotlin.jvm'
+    id "org.jetbrains.kotlin.jvm"
 }
 
 dependencies {
@@ -8,25 +8,8 @@ dependencies {
 
     // Architectury
     modApi "dev.architectury:architectury:${rootProject.architecturyVersion}"
-
-    // Kotlin Standard Library
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$rootProject.kotlinVersion"
 }
 
 architectury {
     common()
-}
-
-java {
-    withSourcesJar()
-}
-
-repositories {
-    mavenCentral()
-}
-
-compileKotlin {
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
 }

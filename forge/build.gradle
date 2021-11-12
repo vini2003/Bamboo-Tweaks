@@ -1,6 +1,6 @@
 plugins {
     id "com.github.johnrengelman.shadow" version "7.0.0"
-    id 'org.jetbrains.kotlin.jvm'
+    id "org.jetbrains.kotlin.jvm"
 }
 
 architectury {
@@ -32,9 +32,6 @@ dependencies {
     // Architectury
     modApi "dev.architectury:architectury-forge:${rootProject.architecturyVersion}"
 
-    // Kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:${rootProject.kotlinVersion}"
-
     // Kotlin for Forge
     implementation "thedarkcolour:kotlinforforge:${rootProject.kotlinForForgeVersion}"
 
@@ -61,42 +58,29 @@ shadowJar {
     exclude "fabric.mod.json"
 
     configurations = [project.configurations.shadowCommon]
-
     classifier "dev-shadow"
 }
 
 remapJar {
     input.set shadowJar.archiveFile
-
     dependsOn shadowJar
-
-    classifier "forge"
+    classifier null
 }
 
 jar {
     classifier "dev"
 }
 
-java {
-    withSourcesJar()
-}
-
 sourcesJar {
-    def commonSources = project(":common").remapSourcesJar
-
+    def commonSources = project(":common").sourcesJar
     dependsOn commonSources
-
-    from zipTree(commonSources.output)
+    from commonSources.archiveFile.map { zipTree(it) }
 }
 
 components.java {
     withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
         skip()
     }
-}
-
-repositories {
-    mavenCentral()
 }
 
 compileKotlin {

@@ -20,6 +20,13 @@ pluginManagement {
 
         // Plugin Portal
         gradlePluginPortal()
+
+        // Maven Central
+        mavenCentral()
+    }
+
+    plugins {
+        id "org.jetbrains.kotlin.jvm" version kotlinVersion
     }
 }
 
