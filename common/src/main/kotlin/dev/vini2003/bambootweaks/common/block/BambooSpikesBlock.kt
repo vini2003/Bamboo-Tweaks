@@ -19,12 +19,12 @@ import net.minecraft.world.World
 
 class BambooSpikesBlock(settings: Settings) : Block(settings) {
 	companion object {
-		val ShapeUp = createCuboidShape(13.0, 12.0, 13.0, 3.0, 0.0, 3.0)
-		val ShapeDown = createCuboidShape(13.0, 16.0, 13.0, 3.0, 4.0, 3.0)
-		val ShapeNorth = createCuboidShape(3.0, 13.0, 16.0, 13.0, 3.0, 4.0)
-		val ShapeSouth = createCuboidShape(13.0, 13.0, 0.0, 3.0, 3.0, 12.0)
-		val ShapeEast = createCuboidShape(12.0, 3.0, 13.0, 0.0, 13.0, 3.0)
-		val ShapeWest = createCuboidShape(16.0, 3.0, 13.0, 4.0, 13.0, 3.0)
+		val ShapeUp = createCuboidShape(3.0, 0.0, 3.0, 13.0, 12.0, 13.0)
+		val ShapeDown = createCuboidShape(3.0, 4.0, 3.0, 13.0, 16.0, 13.0)
+		val ShapeNorth = createCuboidShape(3.0, 3.0, 4.0, 13.0, 13.0, 16.0)
+		val ShapeSouth = createCuboidShape(3.0, 3.0, 0.0, 13.0, 13.0, 12.0)
+		val ShapeEast = createCuboidShape(0.0, 3.0, 3.0, 12.0, 13.0, 13.0)
+		val ShapeWest = createCuboidShape(4.0, 3.0, 3.0, 16.0, 13.0, 13.0)
 	}
 	
 	init {
@@ -39,10 +39,10 @@ class BambooSpikesBlock(settings: Settings) : Block(settings) {
 		super.onEntityCollision(blockState, world, blockPos, entity)
 	}
 	
-	override fun onLandedUpon(world: World?, pos: BlockPos?, entity: Entity, distance: Float) {
-		entity.handleFallDamage(distance, 5.0F)
+	override fun onLandedUpon(world: World, blockState: BlockState, blockPos: BlockPos, entity: Entity, distance: Float) {
+		entity.handleFallDamage(distance, 5.0F, DamageSource.CACTUS)
 		
-		super.onLandedUpon(world, pos, entity, distance)
+		super.onLandedUpon(world, blockState, blockPos, entity, distance)
 	}
 	
 	override fun getOutlineShape(

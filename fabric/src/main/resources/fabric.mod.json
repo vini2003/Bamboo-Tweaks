@@ -1,9 +1,9 @@
 {
 	"schemaVersion": 1,
-	"id": "bambootweaks",
-	"version": "${version}",
-	"name": "Bamboo Tweaks",
-	"description": "Because bamboo needs some more uses.",
+	"id": "$id",
+	"version": "$version",
+	"name": "$name",
+	"description": "$description",
 	"authors": [
 		"vini2003"
 	],
@@ -15,20 +15,15 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"dev.vini2003.bambootweaks.FabricBambooTweaks"
+          	"dev.vini2003.bambootweaks.FABT"
 		],
 		"client": [
-			"dev.vini2003.bambootweaks.FabricBambooTweaksClient"
+			"dev.vini2003.bambootweaks.FABTClient"
 		]
 	},
-	"mixins": [
-	],
 	"depends": {
-		"fabricloader": ">=0.7.0",
-		"fabric": "*",
-		"architectury": ">=1.8.131"
-	},
-	"suggests": {
-		"flamingo": "*"
+		"fabricloader": ">=$fabricLoaderVersion",
+		"fabric": ">=$fabricApiVersion",
+		"architectury": ">=$architecturyVersion"
 	}
 }

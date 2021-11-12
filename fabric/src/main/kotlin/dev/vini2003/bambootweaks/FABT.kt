@@ -2,8 +2,8 @@ package dev.vini2003.bambootweaks
 
 import net.fabricmc.api.ModInitializer
 
-class FabricBambooTweaks : ModInitializer {
+class FABT : ModInitializer {
 	override fun onInitialize() {
-		CommonBambooTweaks.init()
+		CBT.init()
 	}
 }

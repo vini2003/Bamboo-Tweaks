@@ -24,10 +24,10 @@ repositories {
         url = "https://hephaestus.dev/release"
     }
 
-    // JitPack
+    // TerraformersMC
     maven {
-        name = "JitPack"
-        url = "https://jitpack.io/"
+        name = "TerraformersMC"
+        url = "https://maven.terraformersmc.com/releases"
     }
 
     // shedaniel
@@ -47,32 +47,30 @@ dependencies {
     modApi "net.fabricmc.fabric-api:fabric-api:${rootProject.fabricApiVersion}"
 
     // Architectury
-    modApi "me.shedaniel:architectury-fabric:${rootProject.architecturyVersion}"
+    modApi "dev.architectury:architectury-fabric:${rootProject.architecturyVersion}"
 
     // Mod Menu
-    modImplementation "io.github.prospector:modmenu:${project.modMenuVersion}"
+    modImplementation "com.terraformersmc:modmenu:${project.modMenuVersion}"
 
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$rootProject.kotlinVersion"
 
-    implementation(project(path: ":common")) {
-        transitive = false
-    }
-
-    developmentFabric(project(path: ":common")) {
-        transitive = false
-    }
-
-    shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) {
-        transitive = false
-    }
+    common(project(path: ":common", configuration: "namedElements")) { transitive false }
+    shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
 }
 
 processResources {
-    inputs.property "version", project.version
-
     filesMatching("fabric.mod.json") {
-        expand "version": project.version
+        expand(
+                id: projectId,
+                name: projectName,
+                version: projectVersion,
+                description: projectDescription,
+                minecraftVersion: minecraftVersion,
+                fabricLoaderVersion: fabricLoaderVersion,
+                fabricApiVersion: fabricApiVersion,
+                architecturyVersion: architecturyVersion
+        )
     }
 }
 

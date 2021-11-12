@@ -29,7 +29,7 @@ dependencies {
     forge "net.minecraftforge:forge:${rootProject.minecraftVersion}-${rootProject.forgeVersion}"
 
     // Architectury
-    modApi "me.shedaniel:architectury-forge:${rootProject.architecturyVersion}"
+    modApi "dev.architectury:architectury-forge:${rootProject.architecturyVersion}"
 
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib:${rootProject.kotlinVersion}"
@@ -37,17 +37,8 @@ dependencies {
     // Kotlin for Forge
     implementation "thedarkcolour:kotlinforforge:${rootProject.kotlinForForgeVersion}"
 
-    implementation(project(path: ":common")) {
-        transitive = false
-    }
-
-    developmentForge(project(path: ":common")) {
-        transitive = false
-    }
-
-    shadowCommon(project(path: ":common", configuration: "transformProductionForge")) {
-        transitive = false
-    }
+    common(project(path: ":common", configuration: "namedElements")) { transitive false }
+    shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
 }
 
 processResources {

@@ -2,8 +2,8 @@ package dev.vini2003.bambootweaks
 
 import net.fabricmc.api.ClientModInitializer
 
-class FabricBambooTweaksClient : ClientModInitializer {
+class FABTClient : ClientModInitializer {
 	override fun onInitializeClient() {
-		CommonBambooTweaksClient.init()
+		CBTClient.init()
 	}
 }

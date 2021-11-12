@@ -7,7 +7,7 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${rootProject.fabricLoaderVersion}"
 
     // Architectury
-    modApi "me.shedaniel:architectury:${rootProject.architecturyVersion}"
+    modApi "dev.architectury:architectury:${rootProject.architecturyVersion}"
 
     // Kotlin Standard Library
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$rootProject.kotlinVersion"

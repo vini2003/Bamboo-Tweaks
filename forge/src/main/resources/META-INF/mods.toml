@@ -4,10 +4,10 @@ loaderVersion = "[1.11,)"
 license = "MIT"
 
 [[mods]]
-modId = "bambootweaks"
-version = "${version}"
-displayName = "Bamboo Tweaks"
-authors = "dev"
+modId = "$id"
+version = "$version"
+displayName = "$name"
+authors = "vini2003"
 description = '''
 Because bamboo needs some more uses.
 '''
@@ -16,20 +16,20 @@ Because bamboo needs some more uses.
 [[dependencies.bambootweaks]]
 modId = "forge"
 mandatory = true
-versionRange = "[36,)"
+versionRange = "[$forgeVersion,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.bambootweaks]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.16.5,)"
+versionRange = "[$minecraftVersion,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.bambootweaks]]
 modId = "architectury"
 mandatory = true
-versionRange = "[1.8.131,)"
+versionRange = "[$architecturyVersion,)"
 ordering = "AFTER"
 side = "BOTH"
