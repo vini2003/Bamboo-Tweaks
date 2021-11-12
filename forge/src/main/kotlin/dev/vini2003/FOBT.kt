@@ -6,11 +6,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent
 import thedarkcolour.kotlinforforge.forge.MOD_BUS
 import dev.vini2003.bambootweaks.CBT
+import dev.vini2003.bambootweaks.common.registry.*
 import dev.vini2003.bambootweaks.registry.client.BTRenderTypes
-import dev.vini2003.bambootweaks.common.registry.BTBlocks
-import dev.vini2003.bambootweaks.common.registry.BTRegistries
-import dev.vini2003.bambootweaks.common.registry.BTItemGroups
-import dev.vini2003.bambootweaks.common.registry.BTItems
 
 @Mod(CBT.Id)
 class FOBT {
@@ -25,6 +22,8 @@ class FOBT {
 		BTItemGroups.init()
 		
 		BTRegistries.init()
+		
+		BTFuels.init()
 	}
 	
 	fun init(event: FMLCommonSetupEvent) {

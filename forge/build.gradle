@@ -48,7 +48,7 @@ processResources {
                 description: projectDescription,
                 minecraftVersion: minecraftVersion,
                 fabricLoaderVersion: fabricLoaderVersion,
-                fabricApiVersion: fabricApiVersion,
+                forgeVersion: forgeVersion,
                 architecturyVersion: architecturyVersion
         )
     }
