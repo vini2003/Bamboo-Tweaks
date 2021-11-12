@@ -1,0 +1,16 @@
+{
+	"type": "crafting_shaped",
+	"pattern": [
+		"BB",
+		"BB"
+	],
+	"key": {
+		"B": {
+			"item": "bambootweaks:dry_bamboo"
+		}
+	},
+	"result": {
+		"item": "bambootweaks:dry_bamboo_block",
+		"count": 1
+	}
+}

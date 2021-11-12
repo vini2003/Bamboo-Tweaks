@@ -1,0 +1,107 @@
+plugins {
+    id "com.github.johnrengelman.shadow" version "7.0.0"
+    id 'org.jetbrains.kotlin.jvm'
+}
+
+architectury {
+    platformSetupLoomIde()
+
+    forge()
+}
+
+configurations {
+    common
+    shadowCommon
+    compileClasspath.extendsFrom common
+    runtimeClasspath.extendsFrom common
+    developmentForge.extendsFrom common
+}
+repositories {
+    // Kotlin for Forge
+    maven {
+        name = "Kotlin for Forge"
+        url = "https://thedarkcolour.github.io/KotlinForForge/"
+    }
+}
+
+dependencies {
+    // Forge
+    forge "net.minecraftforge:forge:${rootProject.minecraftVersion}-${rootProject.forgeVersion}"
+
+    // Architectury
+    modApi "me.shedaniel:architectury-forge:${rootProject.architecturyVersion}"
+
+    // Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:${rootProject.kotlinVersion}"
+
+    // Kotlin for Forge
+    implementation "thedarkcolour:kotlinforforge:${rootProject.kotlinForForgeVersion}"
+
+    implementation(project(path: ":common")) {
+        transitive = false
+    }
+
+    developmentForge(project(path: ":common")) {
+        transitive = false
+    }
+
+    shadowCommon(project(path: ":common", configuration: "transformProductionForge")) {
+        transitive = false
+    }
+}
+
+processResources {
+    inputs.property "version", project.version
+
+    filesMatching("META-INF/mods.toml") {
+        expand "version": project.version
+    }
+}
+
+shadowJar {
+    exclude "fabric.mod.json"
+
+    configurations = [project.configurations.shadowCommon]
+
+    classifier "dev-shadow"
+}
+
+remapJar {
+    input.set shadowJar.archiveFile
+
+    dependsOn shadowJar
+
+    classifier "forge"
+}
+
+jar {
+    classifier "dev"
+}
+
+java {
+    withSourcesJar()
+}
+
+sourcesJar {
+    def commonSources = project(":common").remapSourcesJar
+
+    dependsOn commonSources
+
+    from zipTree(commonSources.output)
+}
+
+components.java {
+    withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
+        skip()
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}

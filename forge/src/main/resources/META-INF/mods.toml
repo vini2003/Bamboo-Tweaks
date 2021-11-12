@@ -1,0 +1,35 @@
+modLoader = "kotlinforforge"
+loaderVersion = "[1.11,)"
+#issueTrackerURL = ""
+license = "MIT"
+
+[[mods]]
+modId = "bambootweaks"
+version = "${version}"
+displayName = "Bamboo Tweaks"
+authors = "dev"
+description = '''
+Because bamboo needs some more uses.
+'''
+#logoFile = ""
+
+[[dependencies.bambootweaks]]
+modId = "forge"
+mandatory = true
+versionRange = "[36,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.bambootweaks]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.16.5,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.bambootweaks]]
+modId = "architectury"
+mandatory = true
+versionRange = "[1.8.131,)"
+ordering = "AFTER"
+side = "BOTH"

@@ -1,0 +1,73 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+    }
+}
+
+plugins {
+    id "architectury-plugin" version "3.4-SNAPSHOT"
+    id "dev.architectury.loom" version "0.10.0-SNAPSHOT" apply false
+}
+
+apply plugin: 'kotlin'
+
+architectury {
+    minecraft = rootProject.minecraftVersion
+}
+
+subprojects {
+    apply plugin: "dev.architectury.loom"
+
+    loom {
+        silentMojangMappingsLicense()
+    }
+
+    dependencies {
+        // Minecraft
+        minecraft "com.mojang:minecraft:${rootProject.minecraftVersion}"
+
+        // Yarn
+        mappings "net.fabricmc:yarn:${rootProject.yarnVersion}"
+    }
+}
+
+allprojects {
+    apply plugin: "java"
+    apply plugin: "architectury-plugin"
+    apply plugin: "maven-publish"
+
+    archivesBaseName = rootProject.projectId
+    version = rootProject.projectVersion
+    group = rootProject.projectGroup
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        // Kotlin
+        implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
+    }
+
+    tasks.withType(JavaCompile).configureEach {
+        it.options.encoding = "UTF-8"
+
+        it.options.release = 16
+    }
+
+    java {
+        withSourcesJar()
+    }
+
+    compileKotlin {
+        kotlinOptions {
+            jvmTarget = "1.8"
+        }
+    }
+}
+
+

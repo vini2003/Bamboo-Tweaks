@@ -1,0 +1,31 @@
+{
+	"variants": {
+		"facing=up": {
+			"model": "bambootweaks:block/dry_bamboo_spikes"
+		},
+		"facing=down": {
+			"model": "bambootweaks:block/dry_bamboo_spikes",
+			"x": 180
+		},
+		"facing=east": {
+			"model": "bambootweaks:block/dry_bamboo_spikes",
+			"y": 90,
+			"x": 90
+		},
+		"facing=south": {
+			"model": "bambootweaks:block/dry_bamboo_spikes",
+			"y": 180,
+			"x": 90
+		},
+		"facing=west": {
+			"model": "bambootweaks:block/dry_bamboo_spikes",
+			"y": 270,
+			"x": 90
+		},
+		"facing=north": {
+			"model": "bambootweaks:block/dry_bamboo_spikes",
+			"y": 0,
+			"x": 90
+		}
+	}
+}

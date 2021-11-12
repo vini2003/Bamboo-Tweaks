@@ -1,0 +1,30 @@
+pluginManagement {
+    repositories {
+        // Architectury
+        maven {
+            name = "Architectury"
+            url = "https://maven.architectury.dev/"
+        }
+
+        // FabricMC
+        maven {
+            name = "FabricMC"
+            url = "https://maven.fabricmc.net/"
+        }
+
+        // Forge
+        maven {
+            name = "Forge"
+            url = "https://files.minecraftforge.net/maven/"
+        }
+
+        // Plugin Portal
+        gradlePluginPortal()
+    }
+}
+
+include("common")
+include("fabric")
+include("forge")
+
+rootProject.name = "bambootweaks"

@@ -1,0 +1,32 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm'
+}
+
+dependencies {
+    // Fabric Loader
+    modImplementation "net.fabricmc:fabric-loader:${rootProject.fabricLoaderVersion}"
+
+    // Architectury
+    modApi "me.shedaniel:architectury:${rootProject.architecturyVersion}"
+
+    // Kotlin Standard Library
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$rootProject.kotlinVersion"
+}
+
+architectury {
+    common()
+}
+
+java {
+    withSourcesJar()
+}
+
+repositories {
+    mavenCentral()
+}
+
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
