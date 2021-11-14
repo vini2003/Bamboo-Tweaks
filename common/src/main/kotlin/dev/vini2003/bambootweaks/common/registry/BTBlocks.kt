@@ -57,7 +57,7 @@ object BTBlocks {
 	}
 	
 	val BambooWall = registerBlockWithItem("bamboo_wall") {
-		BambooWallBlock(blockSettings(Material.BAMBOO).tool(ToolType.AXE).strength(2.0F, 3.0F))
+		BambooWallBlock(blockSettings(Material.BAMBOO).tool(ToolType.AXE).nonOpaque().strength(2.0F, 3.0F))
 	}
 	
 	val BambooLadder = registerBlockWithItem("bamboo_ladder") {
@@ -110,7 +110,7 @@ object BTBlocks {
 	}
 	
 	val DryBambooWall = registerBlockWithItem("dry_bamboo_wall") {
-		BambooWallBlock(blockSettings(Material.BAMBOO).tool(ToolType.AXE).strength(2.0F, 3.0F))
+		BambooWallBlock(blockSettings(Material.BAMBOO).tool(ToolType.AXE).nonOpaque().strength(2.0F, 3.0F))
 	}
 	
 	val DryBambooLadder = registerBlockWithItem("dry_bamboo_ladder") {

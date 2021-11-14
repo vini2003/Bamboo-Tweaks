@@ -1,5 +1,5 @@
 {
-	"parent": "block/door_bottom",
+	"parent": "bambootweaks:block/bamboo_door_bottom",
 	"textures": {
 		"bottom": "bambootweaks:block/dry_bamboo_door_bottom",
 		"top": "bambootweaks:block/dry_bamboo_door_top"

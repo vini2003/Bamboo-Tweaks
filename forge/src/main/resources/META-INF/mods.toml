@@ -1,5 +1,5 @@
 modLoader = "kotlinforforge"
-loaderVersion = "[1.11,)"
+loaderVersion = "[$kotlinForForgeVersion,)"
 #issueTrackerURL = ""
 license = "MIT"
 
@@ -13,21 +13,21 @@ Because bamboo needs some more uses.
 '''
 #logoFile = ""
 
-[[dependencies.bambootweaks]]
+[[dependencies.$id]]
 modId = "forge"
 mandatory = true
 versionRange = "[$forgeVersion,)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.bambootweaks]]
+[[dependencies.$id]]
 modId = "minecraft"
 mandatory = true
 versionRange = "[$minecraftVersion,)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.bambootweaks]]
+[[dependencies.$id]]
 modId = "architectury"
 mandatory = true
 versionRange = "[$architecturyVersion,)"

@@ -22,8 +22,8 @@
 		]
 	},
 	"depends": {
-		"fabricloader": ">=$fabricLoaderVersion",
-		"fabric": ">=$fabricApiVersion",
+		"fabricloader": "*",
+		"fabric": "*",
 		"architectury": ">=$architecturyVersion"
 	}
 }

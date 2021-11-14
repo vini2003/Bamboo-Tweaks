@@ -47,6 +47,7 @@ processResources {
                 version: projectVersion,
                 description: projectDescription,
                 minecraftVersion: minecraftVersion,
+                kotlinForForgeVersion: kotlinForForgeVersion,
                 fabricLoaderVersion: fabricLoaderVersion,
                 forgeVersion: forgeVersion,
                 architecturyVersion: architecturyVersion

@@ -1,3 +1,9 @@
+buildscript {
+    configurations.classpath {
+        resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+    }
+}
+
 plugins {
     id "architectury-plugin"
     id "dev.architectury.loom" apply false
@@ -21,7 +27,7 @@ subprojects {
         minecraft "com.mojang:minecraft:${rootProject.minecraftVersion}"
 
         // Yarn
-        mappings loom.officialMojangMappings()
+        mappings "net.fabricmc:yarn:${rootProject.yarnVersion}:v2"
     }
 }
 

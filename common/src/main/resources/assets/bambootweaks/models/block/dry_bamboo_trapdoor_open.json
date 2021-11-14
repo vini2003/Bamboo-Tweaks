@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:block/template_trapdoor_open",
+  "parent": "bambootweaks:block/bamboo_trapdoor_open",
   "textures": {
     "texture": "bambootweaks:block/dry_bamboo_trapdoor"
   }
