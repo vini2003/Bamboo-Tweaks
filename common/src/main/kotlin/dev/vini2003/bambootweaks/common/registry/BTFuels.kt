@@ -1,11 +1,10 @@
 package dev.vini2003.bambootweaks.common.registry
 
 import dev.architectury.registry.fuel.FuelRegistry
-import net.minecraft.item.Items
 
 object BTFuels {
 	fun init() {
-		FuelRegistry.register(500, BTBlocks.Bamboo.orNull)
+		FuelRegistry.register(500, BTBlocks.BambooBlock.orNull)
 		FuelRegistry.register(200, BTBlocks.BambooDoor.orNull)
 		FuelRegistry.register(300, BTBlocks.BambooFence.orNull)
 		FuelRegistry.register(300, BTBlocks.BambooFenceGate.orNull)
@@ -18,7 +17,7 @@ object BTFuels {
 		FuelRegistry.register(300, BTBlocks.BambooTrapdoor.orNull)
 		FuelRegistry.register(300, BTBlocks.BambooTrapdoor.orNull)
 		
-		FuelRegistry.register(500, BTBlocks.DryBamboo.orNull)
+		FuelRegistry.register(500, BTBlocks.DryBambooBlock.orNull)
 		FuelRegistry.register(200, BTBlocks.DryBambooDoor.orNull)
 		FuelRegistry.register(300, BTBlocks.DryBambooFence.orNull)
 		FuelRegistry.register(300, BTBlocks.DryBambooFenceGate.orNull)

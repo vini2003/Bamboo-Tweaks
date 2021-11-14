@@ -8,7 +8,9 @@
 		"vini2003"
 	],
 	"contact": {
-		"sources": "https://github.com/vini2003/BambooTweaks"
+		"homepage": "https://www.curseforge.com/minecraft/mc-mods/bamboo-tweaks",
+		"sources": "https://github.com/vini2003/BambooTweaks",
+		"issues": "https://github.com/vini2003/BambooTweaks/issues"
 	},
 	"license": "GPLv3",
 	"icon": "assets/bambootweaks/icon.png",

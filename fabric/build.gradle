@@ -44,7 +44,7 @@ dependencies {
     modApi "dev.architectury:architectury-fabric:${rootProject.architecturyVersion}"
 
     // Mod Menu
-    modImplementation "com.terraformersmc:modmenu:${project.modMenuVersion}"
+    modApi "com.terraformersmc:modmenu:${project.modMenuVersion}"
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
@@ -67,23 +67,25 @@ processResources {
 
 shadowJar {
     configurations = [project.configurations.shadowCommon]
-    classifier "dev-shadow"
+    classifier "fabric-dev-shadow"
 }
 
 remapJar {
     input.set shadowJar.archiveFile
     dependsOn shadowJar
-    classifier null
+    classifier "fabric"
 }
 
 jar {
-    classifier "dev"
+    classifier "fabric-dev"
 }
 
 sourcesJar {
     def commonSources = project(":common").sourcesJar
     dependsOn commonSources
     from commonSources.archiveFile.map { zipTree(it) }
+
+    classifier "fabric-sources"
 }
 
 components.java {

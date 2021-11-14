@@ -11,6 +11,6 @@ object BTItemGroups {
 	}
 	
 	val BambooTweaks: ItemGroup = CreativeTabRegistry.create(CBT.identifier(CBT.Id)) {
-		ItemStack(BTBlocks.Bamboo.orNull!!)
+		ItemStack(BTBlocks.BambooBlock.orNull!!)
 	}
 }
