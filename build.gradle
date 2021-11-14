@@ -1,6 +1,7 @@
 plugins {
-    id "architectury-plugin" version "3.4-SNAPSHOT"
-    id "dev.architectury.loom" version "0.10.0-SNAPSHOT" apply false
+    id "architectury-plugin"
+    id "dev.architectury.loom" apply false
+    id "com.github.johnrengelman.shadow"
     id "org.jetbrains.kotlin.jvm"
 }
 
@@ -20,14 +21,14 @@ subprojects {
         minecraft "com.mojang:minecraft:${rootProject.minecraftVersion}"
 
         // Yarn
-        mappings "net.fabricmc:yarn:${rootProject.yarnVersion}"
+        mappings loom.officialMojangMappings()
     }
 }
 
 allprojects {
-    apply plugin: "java"
     apply plugin: "architectury-plugin"
     apply plugin: "maven-publish"
+    apply plugin: "kotlin"
 
     archivesBaseName = rootProject.projectId
     version = rootProject.projectVersion
@@ -55,7 +56,7 @@ allprojects {
 
     compileKotlin {
         kotlinOptions {
-            jvmTarget = "1.8"
+            jvmTarget = "16"
         }
     }
 }

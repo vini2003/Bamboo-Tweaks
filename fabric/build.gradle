@@ -1,7 +1,9 @@
 plugins {
-    id "com.github.johnrengelman.shadow" version "7.0.0"
+    id "com.github.johnrengelman.shadow"
     id "org.jetbrains.kotlin.jvm"
 }
+
+apply plugin: 'kotlin'
 
 architectury {
     platformSetupLoomIde()
@@ -87,11 +89,5 @@ sourcesJar {
 components.java {
     withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
         skip()
-    }
-}
-
-compileKotlin {
-    kotlinOptions {
-        jvmTarget = "1.8"
     }
 }

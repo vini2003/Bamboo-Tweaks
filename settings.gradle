@@ -27,11 +27,14 @@ pluginManagement {
 
     plugins {
         id "org.jetbrains.kotlin.jvm" version kotlinVersion
+        id "architectury-plugin" version architecturyPluginVersion
+        id "dev.architectury.loom" version architecturyLoomVersion apply false
+        id "com.github.johnrengelman.shadow" version shadowVersion
     }
 }
 
 include("common")
 include("fabric")
-// include("forge")
+include("forge")
 
 rootProject.name = "bambootweaks"
